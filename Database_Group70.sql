@@ -43,7 +43,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (0,'admin','admin','admin@email.com','123admin','1234567890','1111-01-01','chase',1,1);
+INSERT INTO `accounts` VALUES (0,'admin','admin','admin@email.com','123admin','1234567890','1111-01-01','chase',1,1),(1,'custRep','custRep','custRep@email.com','456custRep','0987654321','2222-02-02','chase',1,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-19 18:07:49
+-- Dump completed on 2021-03-22 16:58:49
