@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: auctiondatabase
+-- Host: 127.0.0.1    Database: test
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accounts` (
-  `Acc_ID` int NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
   `Password` varchar(45) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (0,'admin','admin','admin@email.com','123admin','1234567890','1111-01-01','chase',1,1),(1,'custRep','custRep','custRep@email.com','456custRep','0987654321','2222-02-02','chase',1,0);
+INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','123admin','1234567890','1111-01-01','chase',1,1),('custRep1','custRep','custRepName','custRep@email.com','456custRep','0987654321','2222-02-02','chase',1,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `alert`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alert` (
-  `Acc_ID` int NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
   `Item_ID` int NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Item_ID`),
   KEY `Item_ID_idx` (`Item_ID`),
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `bid`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bid` (
-  `Acc_ID` int NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
   `Item_ID` int NOT NULL,
   `Bid_price` varchar(45) NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Item_ID`),
@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS `generates`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `generates` (
   `Item_ID` int NOT NULL,
-  `Acc_ID` int NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
   `isAdmin` tinyint NOT NULL DEFAULT '0',
   `Date` date NOT NULL,
   `Type` varchar(45) NOT NULL,
@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS `listing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `listing` (
-  `Acc_ID` int NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
   `Item_ID` int NOT NULL,
   `Max_price` int DEFAULT NULL,
   `Start_price` int NOT NULL,
@@ -244,8 +244,8 @@ DROP TABLE IF EXISTS `questions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `questions` (
-  `EndUser_Acc_ID` int NOT NULL,
-  `CustomerRep_Acc_ID` int NOT NULL,
+  `EndUser_Acc_ID` varchar(45) NOT NULL,
+  `CustomerRep_Acc_ID` varchar(45) NOT NULL,
   `Question` varchar(45) NOT NULL,
   `Answer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`EndUser_Acc_ID`,`CustomerRep_Acc_ID`),
@@ -290,11 +290,11 @@ LOCK TABLES `ram` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'auctiondatabase'
+-- Dumping events for database 'test'
 --
 
 --
--- Dumping routines for database 'auctiondatabase'
+-- Dumping routines for database 'test'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -306,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-22 16:58:49
+-- Dump completed on 2021-03-23 21:55:59
