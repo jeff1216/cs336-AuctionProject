@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `Database_Group70` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `Database_Group70`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: test
+-- Host: 127.0.0.1    Database: Database_Group70
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -43,7 +45,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','123admin','1234567890','1111-01-01','chase',1,1),('custRep1','custRep','custRepName','custRep@email.com','456custRep','0987654321','2222-02-02','chase',1,0);
+INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','123admin','123-456-7890','1111-01-01','chase',1,1),('custRep1','custRep','custRepName','custRep@email.com','456custRep','098-765-4321','2222-02-02','chase',1,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
