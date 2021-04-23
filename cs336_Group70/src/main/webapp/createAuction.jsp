@@ -18,26 +18,29 @@ response.sendRedirect("login.jsp");
 	
 
 <p>Select a type of PC part to sell. </p>
-<select id ="PC Part" onchange="partFunction()">
-<option value="Ram">RAM Storage</option>
-<option value="CPU">Computer Processor Units</option>
-<option value="PSU">Power Supplies</option>
+<select id ="pcPart" onchange="partFunction()">
+	<option value="RAM">RAM Storage</option>
+	<option value="CPU">Computer Processor Units</option>
+	<option value="PSU">Power Supplies</option>
 </select>
 
-<p id ="demo"></p>
+<select id ="subAtt">
+	<option value="selectpls">--- Please select ---</option>
+</select>
+
+
  <script>
 function partFunction() {
-	var temp = document.getElementById("PC Part").value;
-	if(temp.equals("Power Supplies")){
-		document.getElementById("demo").innerHTML = 
-		<select id = "dropdown_two">
-		<option value="Ram">TEST2</option>
-		<option value="CPU">TEST2</option>
-		<option value="PSU">TEST2</option></select>;
+	var ddl = document.getElementById("pcPart");
+	var selectedValue = ddl.options[ddl.selectedIndex].value;
+	if(selectedValue == "CPU"){
+		var sub = document.getElementById("subAtt");
+		var option = document.createElement("option");
+		option.text = "hi";
+		sub.add(option);
 	}
 }
 </script>
-</form>
 
 <%
     }
