@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `Database_Group70` /*!40100 DEFAULT CHARACTER SET
 USE `Database_Group70`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: Database_Group70
+-- Host: 127.0.0.1    Database: database_group70
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -50,56 +50,79 @@ INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','12
 UNLOCK TABLES;
 
 --
--- Table structure for table `alert`
+-- Table structure for table `auction`
 --
 
-DROP TABLE IF EXISTS `alert`;
+DROP TABLE IF EXISTS `auction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `alert` (
-  `Acc_ID` varchar(45) NOT NULL,
-  `Item_ID` int NOT NULL,
-  PRIMARY KEY (`Acc_ID`,`Item_ID`),
-  KEY `Item_ID_idx` (`Item_ID`),
-  CONSTRAINT `Acc_ID2` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `Item_ID2` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`)
+CREATE TABLE `auction` (
+  `Auction_ID` varchar(45) NOT NULL,
+  `Max_price` float DEFAULT NULL,
+  `Start_price` float DEFAULT NULL,
+  `End_date` date DEFAULT NULL,
+  `Start_date` date DEFAULT NULL,
+  PRIMARY KEY (`Auction_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `alert`
+-- Dumping data for table `auction`
 --
 
-LOCK TABLES `alert` WRITE;
-/*!40000 ALTER TABLE `alert` DISABLE KEYS */;
-/*!40000 ALTER TABLE `alert` ENABLE KEYS */;
+LOCK TABLES `auction` WRITE;
+/*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `bid`
+-- Table structure for table `bid_on`
 --
 
-DROP TABLE IF EXISTS `bid`;
+DROP TABLE IF EXISTS `bid_on`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bid` (
-  `Acc_ID` varchar(45) NOT NULL,
-  `Item_ID` int NOT NULL,
-  `Bid_price` varchar(45) NOT NULL,
-  PRIMARY KEY (`Acc_ID`,`Item_ID`),
-  KEY `Item_ID_idx` (`Item_ID`),
-  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `Item_ID` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`)
+CREATE TABLE `bid_on` (
+  `Auction_ID` varchar(45) NOT NULL,
+  `Bid_ID` varchar(45) NOT NULL,
+  PRIMARY KEY (`Auction_ID`,`Bid_ID`),
+  KEY `Bid_ID3` (`Bid_ID`),
+  CONSTRAINT `Auction_ID3` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Bid_ID3` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `bid`
+-- Dumping data for table `bid_on`
 --
 
-LOCK TABLES `bid` WRITE;
-/*!40000 ALTER TABLE `bid` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bid` ENABLE KEYS */;
+LOCK TABLES `bid_on` WRITE;
+/*!40000 ALTER TABLE `bid_on` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bid_on` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bids`
+--
+
+DROP TABLE IF EXISTS `bids`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bids` (
+  `Bid_ID` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Bid_amount` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Date` date NOT NULL,
+  PRIMARY KEY (`Bid_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bids`
+--
+
+LOCK TABLES `bids` WRITE;
+/*!40000 ALTER TABLE `bids` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bids` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -110,11 +133,12 @@ DROP TABLE IF EXISTS `cpu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cpu` (
-  `Item_ID` int NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
   `Core_count` int NOT NULL,
   `Core_clock` int NOT NULL,
   `Series` varchar(45) NOT NULL,
-  PRIMARY KEY (`Item_ID`)
+  PRIMARY KEY (`Item_ID`),
+  CONSTRAINT `Item_ID4` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -142,8 +166,7 @@ CREATE TABLE `generates` (
   `Type` varchar(45) NOT NULL,
   PRIMARY KEY (`Item_ID`,`Acc_ID`),
   KEY `Acc_ID4_idx` (`Acc_ID`),
-  CONSTRAINT `Acc_ID4` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `Item_ID4` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`)
+  CONSTRAINT `Acc_ID4` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,32 +180,83 @@ LOCK TABLES `generates` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `listing`
+-- Table structure for table `has_item`
 --
 
-DROP TABLE IF EXISTS `listing`;
+DROP TABLE IF EXISTS `has_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `listing` (
-  `Acc_ID` varchar(45) NOT NULL,
-  `Item_ID` int NOT NULL,
-  `Max_price` int DEFAULT NULL,
-  `Start_price` int NOT NULL,
-  `End_date` date NOT NULL,
-  PRIMARY KEY (`Acc_ID`,`Item_ID`),
-  KEY `Item_ID3_idx` (`Item_ID`),
-  CONSTRAINT `Acc_ID3` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `Item_ID3` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`)
+CREATE TABLE `has_item` (
+  `Auction_ID` varchar(45) NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
+  PRIMARY KEY (`Auction_ID`,`Item_ID`),
+  KEY `Item_ID_idx` (`Item_ID`),
+  CONSTRAINT `Auction_ID` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Item_ID` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `listing`
+-- Dumping data for table `has_item`
 --
 
-LOCK TABLES `listing` WRITE;
-/*!40000 ALTER TABLE `listing` DISABLE KEYS */;
-/*!40000 ALTER TABLE `listing` ENABLE KEYS */;
+LOCK TABLES `has_item` WRITE;
+/*!40000 ALTER TABLE `has_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `has_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `interested_item`
+--
+
+DROP TABLE IF EXISTS `interested_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `interested_item` (
+  `Acc_ID` varchar(45) NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
+  PRIMARY KEY (`Acc_ID`,`Item_ID`),
+  KEY `Item_ID_idx` (`Item_ID`),
+  CONSTRAINT `Acc_ID3` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Item_ID3` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `interested_item`
+--
+
+LOCK TABLES `interested_item` WRITE;
+/*!40000 ALTER TABLE `interested_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `interested_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `makes_bid`
+--
+
+DROP TABLE IF EXISTS `makes_bid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `makes_bid` (
+  `Acc_ID` varchar(45) NOT NULL,
+  `Bid_ID` varchar(45) NOT NULL,
+  `Increment` float DEFAULT NULL,
+  `Upper_limit` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Acc_ID`,`Bid_ID`),
+  KEY `Bid_ID_idx` (`Bid_ID`),
+  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `makes_bid`
+--
+
+LOCK TABLES `makes_bid` WRITE;
+/*!40000 ALTER TABLE `makes_bid` DISABLE KEYS */;
+/*!40000 ALTER TABLE `makes_bid` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -193,7 +267,7 @@ DROP TABLE IF EXISTS `pc_part`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pc_part` (
-  `Item_ID` int NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Manufacturer` varchar(45) NOT NULL,
   `Market_price` varchar(45) NOT NULL,
@@ -214,6 +288,32 @@ LOCK TABLES `pc_part` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `posts` (
+  `Auction_ID` varchar(45) NOT NULL,
+  `Acc_ID` varchar(45) NOT NULL,
+  PRIMARY KEY (`Auction_ID`,`Acc_ID`),
+  KEY `Acc_ID_idx` (`Acc_ID`),
+  CONSTRAINT `Acc_ID2` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Auction_ID2` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `power_supply`
 --
 
@@ -221,11 +321,12 @@ DROP TABLE IF EXISTS `power_supply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `power_supply` (
-  `Item_ID` int NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
   `Wattage` int NOT NULL,
   `Modularity` varchar(45) NOT NULL,
   `Efficiency_rating` int NOT NULL,
-  PRIMARY KEY (`Item_ID`)
+  PRIMARY KEY (`Item_ID`),
+  CONSTRAINT `Item_ID6` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -252,8 +353,8 @@ CREATE TABLE `questions` (
   `Answer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`EndUser_Acc_ID`,`CustomerRep_Acc_ID`),
   KEY `CustomerRep_Acc_ID_idx` (`CustomerRep_Acc_ID`),
-  CONSTRAINT `CustomerRep_Acc_ID` FOREIGN KEY (`CustomerRep_Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `EndUser_Acc_ID` FOREIGN KEY (`EndUser_Acc_ID`) REFERENCES `accounts` (`Acc_ID`)
+  CONSTRAINT `CustomerRep_Acc_ID` FOREIGN KEY (`CustomerRep_Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `EndUser_Acc_ID` FOREIGN KEY (`EndUser_Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -274,11 +375,12 @@ DROP TABLE IF EXISTS `ram`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ram` (
-  `Item_ID` int NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
   `Type` varchar(45) NOT NULL,
   `Size` int NOT NULL,
   `Speed` int NOT NULL,
-  PRIMARY KEY (`Item_ID`)
+  PRIMARY KEY (`Item_ID`),
+  CONSTRAINT `Item_ID5` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -292,11 +394,7 @@ LOCK TABLES `ram` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'test'
---
-
---
--- Dumping routines for database 'test'
+-- Dumping routines for database 'database_group70'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -308,4 +406,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23 21:55:59
+-- Dump completed on 2021-04-22 20:32:19
