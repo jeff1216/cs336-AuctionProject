@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `Database_Group70` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `Database_Group70` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `Database_Group70`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `auction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `auction` (
   `Auction_ID` varchar(45) NOT NULL,
-  `Max_price` float DEFAULT NULL,
+  `Current_price` float DEFAULT NULL,
   `Start_price` float DEFAULT NULL,
   `End_date` date DEFAULT NULL,
   `Start_date` date DEFAULT NULL,
@@ -269,11 +269,7 @@ DROP TABLE IF EXISTS `pc_part`;
 CREATE TABLE `pc_part` (
   `Item_ID` varchar(45) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  `Manufacturer` varchar(45) NOT NULL,
-  `Market_price` varchar(45) NOT NULL,
-  `Sold_quantity` int NOT NULL DEFAULT '0',
-  `Sold_price` int NOT NULL DEFAULT '0',
-  `Buyer` varchar(45) DEFAULT NULL,
+  `Condition` varchar(45) NOT NULL,
   PRIMARY KEY (`Item_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -284,6 +280,7 @@ CREATE TABLE `pc_part` (
 
 LOCK TABLES `pc_part` WRITE;
 /*!40000 ALTER TABLE `pc_part` DISABLE KEYS */;
+INSERT INTO `pc_part` VALUES ('item1','ram1','wow'),('item2','ram2','wow'),('item3','ram3','wow');
 /*!40000 ALTER TABLE `pc_part` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,13 +311,13 @@ LOCK TABLES `posts` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `power_supply`
+-- Table structure for table `psu`
 --
 
-DROP TABLE IF EXISTS `power_supply`;
+DROP TABLE IF EXISTS `psu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `power_supply` (
+CREATE TABLE `psu` (
   `Item_ID` varchar(45) NOT NULL,
   `Wattage` int NOT NULL,
   `Modularity` varchar(45) NOT NULL,
@@ -331,12 +328,12 @@ CREATE TABLE `power_supply` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `power_supply`
+-- Dumping data for table `psu`
 --
 
-LOCK TABLES `power_supply` WRITE;
-/*!40000 ALTER TABLE `power_supply` DISABLE KEYS */;
-/*!40000 ALTER TABLE `power_supply` ENABLE KEYS */;
+LOCK TABLES `psu` WRITE;
+/*!40000 ALTER TABLE `psu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `psu` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -390,6 +387,7 @@ CREATE TABLE `ram` (
 
 LOCK TABLES `ram` WRITE;
 /*!40000 ALTER TABLE `ram` DISABLE KEYS */;
+INSERT INTO `ram` VALUES ('item1','type',1,1),('item2','type',2,2),('item3','type',3,3);
 /*!40000 ALTER TABLE `ram` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,4 +404,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-22 20:32:19
+-- Dump completed on 2021-04-24 17:51:29
