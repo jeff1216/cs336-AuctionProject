@@ -18,6 +18,7 @@ ul {
 		<li><a href="myAuction.jsp">View My Auctions</a></li>  
 		<li><a href="bids.jsp">View My Bids</a></li>  
 		<li><a href="questions.jsp">Q & A</a> </li>
+		<li><a href="viewAll.jsp">View All Auctions</a></li>
 		<li style="float:right"><a href="logout.jsp">Log Out</a></li>
 		<li style="float:right"><a href="account.jsp">My Account</a></li>
 	</ul>

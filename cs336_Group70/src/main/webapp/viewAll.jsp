@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>My Auctions</title>
+<title>All Auctions</title>
 </head>
 <body>
 
@@ -29,22 +29,22 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 	
-			//Get account auction from request
-			String auctionID = (String) request.getParameter("auctionId");
+			//Get account username from session
+			String account = (String) session.getAttribute("user");
 			
 			
-			//select statement auction inner join post
-			String select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID Where auction.Auction_ID= ?";
+			//Make a select statement for the auctions table:
+			String auctions_Select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-			PreparedStatement ps = con.prepareStatement(select);
-			ps.setString(1, auctionID);
+			PreparedStatement ps = con.prepareStatement(auctions_Select);
 	
 			
 			//Run the select query against the DB
-			ResultSet auctionRS = ps.executeQuery();
+			ResultSet auctionsRS = ps.executeQuery();
 			
-			if(auctionRS.next()) { %>
+			//List all results into a table
+			if(auctionsRS.next()) { %>
 				<table>
 					<tr>
 						<th>Auction</th>
@@ -55,29 +55,26 @@
 					</tr>
 					<% do { %>
 					<tr>
-						<td><%= auctionRS.getString("Auction_ID") %></td>
-						<td><%= auctionRS.getString("Start_price") %></td>
-						<td><%= auctionRS.getString("Acc_ID") %></td>
-						<td><%= auctionRS.getString("Start_date") %></td>
-						<td><%= auctionRS.getString("End_date") %></td>
+						<td>
+							<a href="auction.jsp?auctionId=<%= auctionsRS.getString("Auction_ID") %>">
+									<%= auctionsRS.getString("Auction_ID") %>
+							</a>
+						</td>
+						<td><%= auctionsRS.getString("Start_price") %></td>
+						<td><%= auctionsRS.getString("Acc_ID") %></td>
+						<td><%= auctionsRS.getString("Start_date") %></td>
+						<td><%= auctionsRS.getString("End_date") %></td>
 					</tr>
-					<% } while (auctionRS.next()); %>
+					<% } while (auctionsRS.next()); %>
 				</table>
-				<%	} 	%>
-			
-			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
-				<input type= "submit" value= "Bid"> 
-			</form>
-			<form action= "autobid.jsp?auctionId=<%= auctionID %>" method = "POST">
-				<input type= "submit" value= "Set Up AutoBid"> 
-			</form>
-			<% 	
+				<%	} 	
+	
 			//Close the connection. 
 			con.close();
 			
 	 	} catch (Exception ex) {
 			out.print(ex);
-			out.print(" Auction page failed");
+			out.print(" View All Auctions failed");
 		}
  	} %>
 

@@ -54,7 +54,11 @@
 					</tr>
 					<% do { %>
 					<tr>
-						<td><%= postsRS.getString("Auction_ID") %></td>
+						<td>
+							<a href="auction.jsp?auctionId=<%= postsRS.getString("Auction_ID") %>">
+							<%= postsRS.getString("Auction_ID") %>
+							</a>
+						</td>
 						<td><%= postsRS.getString("Acc_ID") %></td>
 					</tr>
 					<% } while (postsRS.next()); %>
