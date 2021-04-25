@@ -18,10 +18,7 @@ if ((session.getAttribute("user") == null)) {
 %>
 <%@ include file="navbar.jsp"%>
 
-<form action="MainPage.jsp">
-			<input type="submit" value="Home" />
-		</form>
-		<br>
+
 	
 		<h1>Create Auction</h1>
 		<form method="post" action="addAuction.jsp">

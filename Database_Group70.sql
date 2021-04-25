@@ -274,8 +274,8 @@ CREATE TABLE `makes_bid` (
   `Upper_limit` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Acc_ID`,`Bid_ID`),
   KEY `Bid_ID_idx` (`Bid_ID`),
-  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
-  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`)
+  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
