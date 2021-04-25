@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `auction`;
 CREATE TABLE `auction` (
   `Auction_ID` varchar(45) NOT NULL,
   `Current_price` float DEFAULT NULL,
-  `Start_price` float DEFAULT NULL,
+  `Min_price` float DEFAULT NULL,
   `End_date` datetime DEFAULT NULL,
   `Winner` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Auction_ID`)
@@ -72,6 +72,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+INSERT INTO `auction` VALUES ('6c35c3d0-7625-426b-88f6-56749714827f',0,33,'3333-03-03 03:03:03',NULL),('867cdf65-ad63-4f0a-85b3-d366279cb6d8',NULL,1,'1111-11-11 11:11:11',NULL),('d8083222-a1c4-4bc3-9838-03cd35f8f169',222,222,'2222-12-22 00:00:00',NULL),('e0a29e4e-776f-43c4-bddb-1a985849dc59',0,123,'1111-11-11 11:11:11',NULL);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,6 +149,7 @@ CREATE TABLE `cpu` (
 
 LOCK TABLES `cpu` WRITE;
 /*!40000 ALTER TABLE `cpu` DISABLE KEYS */;
+INSERT INTO `cpu` VALUES ('d59e7776-b91f-41f2-b0e8-c9407021f8c6',2,2,'2000');
 /*!40000 ALTER TABLE `cpu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,6 +204,7 @@ CREATE TABLE `has_item` (
 
 LOCK TABLES `has_item` WRITE;
 /*!40000 ALTER TABLE `has_item` DISABLE KEYS */;
+INSERT INTO `has_item` VALUES ('6c35c3d0-7625-426b-88f6-56749714827f','10d622d2-4b45-402d-9c5c-47b59127b129'),('e0a29e4e-776f-43c4-bddb-1a985849dc59','495b9edd-b869-467a-a8ec-9b91fe256078'),('867cdf65-ad63-4f0a-85b3-d366279cb6d8','7755f3a4-2b35-410d-920f-920ddc26f069'),('d8083222-a1c4-4bc3-9838-03cd35f8f169','d59e7776-b91f-41f2-b0e8-c9407021f8c6');
 /*!40000 ALTER TABLE `has_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +283,7 @@ CREATE TABLE `pc_part` (
 
 LOCK TABLES `pc_part` WRITE;
 /*!40000 ALTER TABLE `pc_part` DISABLE KEYS */;
-INSERT INTO `pc_part` VALUES ('item1','ram1','wow'),('item2','ram2','wow'),('item3','ram3','wow');
+INSERT INTO `pc_part` VALUES ('10d622d2-4b45-402d-9c5c-47b59127b129','broken','used'),('495b9edd-b869-467a-a8ec-9b91fe256078','Test','used'),('7755f3a4-2b35-410d-920f-920ddc26f069','test','used'),('d59e7776-b91f-41f2-b0e8-c9407021f8c6','test2','new'),('item1','ram1','wow'),('item2','ram2','wow'),('item3','ram3','wow');
 /*!40000 ALTER TABLE `pc_part` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,6 +310,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES ('6c35c3d0-7625-426b-88f6-56749714827f','admin'),('867cdf65-ad63-4f0a-85b3-d366279cb6d8','admin'),('d8083222-a1c4-4bc3-9838-03cd35f8f169','admin'),('e0a29e4e-776f-43c4-bddb-1a985849dc59','admin');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,6 +337,7 @@ CREATE TABLE `psu` (
 
 LOCK TABLES `psu` WRITE;
 /*!40000 ALTER TABLE `psu` DISABLE KEYS */;
+INSERT INTO `psu` VALUES ('10d622d2-4b45-402d-9c5c-47b59127b129',3,'3',3),('495b9edd-b869-467a-a8ec-9b91fe256078',1000,'123',123);
 /*!40000 ALTER TABLE `psu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,7 +392,7 @@ CREATE TABLE `ram` (
 
 LOCK TABLES `ram` WRITE;
 /*!40000 ALTER TABLE `ram` DISABLE KEYS */;
-INSERT INTO `ram` VALUES ('item1','type',1,1),('item2','type',2,2),('item3','type',3,3);
+INSERT INTO `ram` VALUES ('7755f3a4-2b35-410d-920f-920ddc26f069','ram1',1,1),('item1','type',1,1),('item2','type',2,2),('item3','type',3,3);
 /*!40000 ALTER TABLE `ram` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,4 +409,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 19:28:50
+-- Dump completed on 2021-04-24 23:04:29
