@@ -140,11 +140,21 @@
 					exists = true;
 				}
 			}
+			
+			//FIND OLD BIDID
+			String oldBidQuery = "Select * FROM makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id inner join auction ON auction.auction_Id = bid_on.auction_Id WHERE bid_on.auction_id = ? and acc_id = ? ORDER BY current_price desc";
+			PreparedStatement psOldBid = con.prepareStatement(oldBidQuery);
+			psOldBid.setString(1, auctionID);
+			psOldBid.setString(2, user);
+			ResultSet oldBidRS = psOldBid.executeQuery();
+			oldBidRS.next();
+			String oldBid = oldBidRS.getString("Bid_ID");
 			if(exists) {
-				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE makes_bid.Acc_ID = ?";
+				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ? and Bid_ID = ?";
 				PreparedStatement ps5 = con.prepareStatement(updateQuery);
 				ps5.setString(1, bid_ID);
 				ps5.setString(2, user);
+				ps5.setString(3,oldBid);
 				ps5.executeUpdate();
 				%> You've updated your bid!<%
 			} else {
