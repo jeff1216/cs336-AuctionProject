@@ -5,6 +5,10 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <%@ page import="java.util.UUID" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.sql.Time" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -46,7 +50,8 @@
 			String auctionID = (String) request.getParameter("auctionId");
 			
 			//Query to find seller's id using auction_ID
-			String seller;
+			String seller; 
+			float bidAmount = Float.parseFloat(request.getParameter("Bid_Amount"));
 			String postQuery = "SELECT * FROM posts WHERE Auction_ID = ?";
 			PreparedStatement ps = con.prepareStatement(postQuery);
 			ps.setString(1, auctionID);	
@@ -54,25 +59,37 @@
 			postRS.next();
 			seller = postRS.getString("Acc_ID");
 			
+			//Query to find currentPrice of the auction_ID
+			Float currentPrice;
+			String priceQuery = "SELECT * FROM auction WHERE Auction_ID = ?";
+			ps = con.prepareStatement(priceQuery);
+			ps.setString(1, auctionID);
+			ResultSet priceRS = ps.executeQuery();
+			priceRS.next();
+			currentPrice = priceRS.getFloat("Current_price");
 			
 			if(user.equals(seller)) { %>
 				 You cannot bid on your own auction!  
 				<% return; 
 			 }
+			if(bidAmount <= currentPrice) { %>
+				Please place a bid higher than the current bid price.
+				<% return;
+			}
 			
 			//Create new bid_ID, obtain bid amount, obtain current date
 			String bid_ID = UUID.randomUUID().toString();
-			float bidAmount = Float.parseFloat(request.getParameter("Bid_Amount"));
-			Date currentDate = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String currentDateString = sdf.format(currentDate);
+			java.util.Date date = new Date();
+			Object currentDate = new java.sql.Timestamp(date.getTime());
+			DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 			
 			//insert a new bid into bids table
 			String insertQuery = "INSERT INTO bids VALUES(?, ?, ?)";
 			PreparedStatement ps2 = con.prepareStatement(insertQuery);
 			ps2.setString(1, bid_ID);
 			ps2.setFloat(2, bidAmount);
-			ps2.setString(3, currentDateString);
+			ps2.setObject(3, currentDate);
 			ps2.executeUpdate();
 			
 			//insert the new bid into bid_on
@@ -112,6 +129,12 @@
 				%> You've placed a first bid<% 
 			}
 			
+			//Update current price in Auction Table
+			String updateQuery2 = "UPDATE auction SET Current_price = ? WHERE Auction_ID = ?";
+			PreparedStatement ps7 = con.prepareStatement(updateQuery2);
+			ps7.setFloat(1, bidAmount);
+			ps7.setString(2, auctionID);
+			ps7.executeUpdate();
 			//Close the connection. 
 			con.close();
 			

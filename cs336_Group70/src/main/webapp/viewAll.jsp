@@ -50,7 +50,6 @@
 						<th>Auction</th>
 						<th>Current Bid</th>
 						<th>Seller</th>
-						<th>Start Date</th>
 						<th>End Date</th>
 					</tr>
 					<% do { %>
@@ -60,9 +59,8 @@
 									<%= auctionsRS.getString("Auction_ID") %>
 							</a>
 						</td>
-						<td><%= auctionsRS.getString("Start_price") %></td>
+						<td><%= auctionsRS.getString("Current_price") %></td>
 						<td><%= auctionsRS.getString("Acc_ID") %></td>
-						<td><%= auctionsRS.getString("Start_date") %></td>
 						<td><%= auctionsRS.getString("End_date") %></td>
 					</tr>
 					<% } while (auctionsRS.next()); %>
