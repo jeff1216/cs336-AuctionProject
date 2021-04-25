@@ -3,11 +3,16 @@
 <!--Import some libraries that have classes that we need -->
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<%@ page import="java.util.UUID" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.sql.Time" %>
+<%@ page import="java.sql.Timestamp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>My Auctions</title>
+<title>View An Auction</title>
 </head>
 <body>
 
@@ -34,7 +39,7 @@
 			
 			
 			//select statement auction inner join post
-			String select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID Where auction.Auction_ID= ?";
+			String select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID INNER JOIN has_item ON auction.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID Where auction.Auction_ID= ?";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(select);
@@ -43,27 +48,130 @@
 			
 			//Run the select query against the DB
 			ResultSet auctionRS = ps.executeQuery();
+			boolean timeCheck;
 			
-			if(auctionRS.next()) { %>
+			if(auctionRS.next()) { 
+				java.util.Date date = new Date();
+				Timestamp currentDate = new java.sql.Timestamp(date.getTime());
+				Timestamp endingDate = auctionRS.getTimestamp("End_Date");
+				if(currentDate.before(endingDate)){
+					timeCheck = true;
+				}
+				else {
+					timeCheck = false;
+				}
+				String name = auctionRS.getString("Name");
+				Float reservePrice = auctionRS.getFloat("Min_price");
+				Float currentBid = auctionRS.getFloat("Current_price");
+				
+				String highestBidder = "";
+				String highestBidderQuery = "SELECT * FROM auction INNER JOIN bid_on ON auction.Auction_ID= bid_on.Auction_ID INNER JOIN bids ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN makes_bid ON bids.Bid_ID = makes_bid.Bid_ID WHERE auction.Auction_ID = ? ORDER By Bid_amount DESC";
+				ps = con.prepareStatement(highestBidderQuery);
+				ps.setString(1, auctionRS.getString("Auction_ID"));
+				ResultSet highestBidderRS = ps.executeQuery();
+				if(highestBidderRS.next()) {
+					highestBidder = highestBidderRS.getString("makes_bid.Acc_ID");
+				}
+			%>
 				<table>
 					<tr>
 						<th>Auction</th>
-						<th>Current Bid</th>
 						<th>Seller</th>
+						<th>Current Highest Bid</th>
+						<th>Current Highest Bidder</th>
 						<th>End Date</th>
 						<th>Status</th>
+						<th>Winner</th>
 					</tr>
 					<% do { %>
 					<tr>
-						<td><%= auctionRS.getString("Auction_ID") %></td>
+						<td><%= auctionRS.getString("Name") %></td>
+						<td><%= auctionRS.getString("posts.Acc_ID") %></td>
 						<td><%= auctionRS.getString("Current_price") %></td>
-						<td><%= auctionRS.getString("Acc_ID") %></td>
+						<td><%= highestBidder %></td>
 						<td><%= auctionRS.getString("End_date") %></td>
+						<td><% if(timeCheck) { %>
+							 		Ongoing 
+							<% }
+							   else { %>
+							   		Closed
+							<% } %>
+						</td>
+						<td><% if(!timeCheck && currentBid > reservePrice) { %>
+							 		 <%= highestBidder %>
+							<% } 
+							   else if(!timeCheck) { %> 
+								--No Winner-- 
+								<% } 
+									else {
+								%>    <% 
+								}
+							%>
+						</td>
 					</tr>
 					<% } while (auctionRS.next()); %>
 				</table>
-				<%	} 	%>
+		  <%} 	
 				
+			auctionRS.first();
+			String partType = auctionRS.getString("Type");
+			String itemID = auctionRS.getString("Item_ID");
+			%>
+			
+			<br>
+			<h3><u>Details</u></h3>
+			Item name: <%= auctionRS.getString("Name") %>
+			<br>
+			Condition:	<%= auctionRS.getString("Condition") %>
+			<br>
+			Part type:	<%= partType %>
+			<br>
+			<%
+			String partsQuery;
+			if(partType.equals("ram")) {
+				partsQuery = "SELECT * FROM pc_part INNER JOIN ram ON pc_part.Item_ID = ram.Item_ID Where pc_part.Item_ID = ?";
+				ps = con.prepareStatement(partsQuery);
+				ps.setString(1, itemID);
+				ResultSet ramRS = ps.executeQuery();
+				ramRS.next();
+			%> 
+				Ram Type: <%= ramRS.getString("Type") %>
+				<br>
+				Ram Size: <%= ramRS.getString("Size") %>
+				<br>
+				Ram Speed: <%= ramRS.getString("Speed") %>
+				<br>
+		<%	} 
+			else if(partType.equals("cpu")) {
+				partsQuery = "SELECT * FROM pc_part INNER JOIN cpu ON pc_part.Item_ID = cpu.Item_ID Where pc_part.Item_ID = ?";
+				PreparedStatement ps2 = con.prepareStatement(partsQuery);
+				ps2.setString(1, itemID);
+				ResultSet cpuRS = ps2.executeQuery();
+				cpuRS.next();
+			%> 
+				CPU Series: <%= cpuRS.getString("Series") %>
+				<br>
+				CPU Core Count: <%= cpuRS.getString("Core_Count") %>
+				<br>
+				CPU Clock Speed: <%= cpuRS.getString("Core_Clock") %>
+				<br>
+		<%	}
+			else {
+				partsQuery = "SELECT * FROM pc_part INNER JOIN psu ON pc_part.Item_ID = psu.Item_ID Where pc_part.Item_ID = ?";
+				PreparedStatement ps3 = con.prepareStatement(partsQuery);
+				ps3.setString(1, itemID);
+				ResultSet psuRS = ps3.executeQuery();
+				psuRS.next();
+			%> 
+				PSU Wattage: <%= psuRS.getString("Wattage") %>
+				<br>
+				PSU Efficiency Rating: <%= psuRS.getString("Efficiency_Rating") %>
+				<br>
+				PSU Modularity: <%= psuRS.getString("Modularity") %>
+				<br>
+		 <% } %>	
+		
+			
 			<h1>Manual Bid:</h1>
 			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
 				<table>
@@ -103,7 +211,7 @@
 					</tr>
 				</table>
 			</form>
-			<% 	
+			<%
 			//Close the connection. 
 			con.close();
 			
