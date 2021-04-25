@@ -88,16 +88,16 @@
 						}
 						%>
 					<tr>
-						<td>
+						<td style='text-align:center'>
 							<a href="auction.jsp?auctionId=<%= auctionsRS.getString("Auction_ID") %>">
 									<%= auctionsRS.getString("Name") %>
 							</a>
 						</td>
-						<td><%= auctionsRS.getString("posts.Acc_ID") %></td>
-						<td><%= auctionsRS.getFloat("Current_price") %></td>
-						<td><%= highestBidder %></td>
-						<td><%= auctionsRS.getString("End_date") %></td>
-						<td><% if(timeCheck) { %>
+						<td style='text-align:center'><%= auctionsRS.getString("posts.Acc_ID") %></td>
+						<td style='text-align:center'><%= auctionsRS.getFloat("Current_price") %></td>
+						<td style='text-align:center'><%= highestBidder %></td>
+						<td style='text-align:center'><%= auctionsRS.getString("End_date") %></td>
+						<td style='text-align:center'><% if(timeCheck) { %>
 							 		Ongoing. 
 							<% }
 							   else { %>

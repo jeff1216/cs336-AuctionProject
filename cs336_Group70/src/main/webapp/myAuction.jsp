@@ -83,16 +83,16 @@
 					
 					%>
 					<tr>
-						<td>
+						<td style='text-align:center'>
 							<a href="auction.jsp?auctionId=<%= myAuctionRS.getString("Auction_ID") %>">
 							<%= myAuctionRS.getString("Name") %>
 							</a>
 						</td>
-						<td><%= myAuctionRS.getString("Min_Price") %></td>
-						<td><%= myAuctionRS.getString("Current_Price") %></td>
-						<td><%= highestBidder %></td>
-						<td><%= myAuctionRS.getString("End_date") %></td>
-						<td><% if(timeCheck) { %>
+						<td style='text-align:center'><%= myAuctionRS.getString("Min_Price") %></td>
+						<td style='text-align:center'><%= myAuctionRS.getString("Current_Price") %></td>
+						<td style='text-align:center'><%= highestBidder %></td>
+						<td style='text-align:center'><%= myAuctionRS.getString("End_date") %></td>
+						<td style='text-align:center'><% if(timeCheck) { %>
 							 		Ongoing. 
 							<% }
 							   else { %>
