@@ -61,7 +61,7 @@ if ((session.getAttribute("user") == null)) {
 				</select>
 			</td>
 		</tr>
-		<tr><td>Note: For entries regarding other types, please fill in with anything.</td> </tr>
+		<tr><td>Note: For entries regarding other types, please fill in with "0".</td> </tr>
 		
 		<tr>		
 		<td>RAM Type (RAM)</td>
