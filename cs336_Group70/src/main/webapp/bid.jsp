@@ -141,7 +141,7 @@
 				}
 			}
 			if(exists) {
-				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ?";
+				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE makes_bid.Acc_ID = ?";
 				PreparedStatement ps5 = con.prepareStatement(updateQuery);
 				ps5.setString(1, bid_ID);
 				ps5.setString(2, user);

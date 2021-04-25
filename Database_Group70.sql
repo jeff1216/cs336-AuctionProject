@@ -216,7 +216,7 @@ DROP TABLE IF EXISTS `has_item`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `has_item` (
   `Auction_ID` varchar(45) NOT NULL,
-  `	` varchar(45) NOT NULL,
+  `Item_ID` varchar(45) NOT NULL,
   PRIMARY KEY (`Auction_ID`,`Item_ID`),
   KEY `Item_ID_idx` (`Item_ID`),
   CONSTRAINT `Auction_ID` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON UPDATE CASCADE,
@@ -274,8 +274,8 @@ CREATE TABLE `makes_bid` (
   `Upper_limit` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Acc_ID`,`Bid_ID`),
   KEY `Bid_ID_idx` (`Bid_ID`),
-  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON UPDATE CASCADE,
-  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON UPDATE CASCADE
+  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`),
+  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -38,7 +38,7 @@
 			
 			
 			//Make a select statement for the auctions table:
-			String auctions_Select = "SELECT * FROM makes_bid INNER JOIN bids ON makes_bid.Bid_ID = bids.Bid_ID INNER JOIN bid_on ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN has_item ON bid_on.Auction_ID = has_item.Auction_ID INNER JOIN auction ON auction.Auction_ID = has_item.Auction_ID INNER JOIN posts ON has_item.Auction_ID = posts.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID WHERE makes_bid.Acc_ID = ?";
+			String auctions_Select = "SELECT * FROM makes_bid INNER JOIN bids ON makes_bid.Bid_ID = bids.Bid_ID INNER JOIN bid_on ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN has_item ON bid_on.Auction_ID = has_item.Auction_ID INNER JOIN auction ON auction.Auction_ID = has_item.Auction_ID INNER JOIN posts ON has_item.Auction_ID = posts.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID WHERE makes_bid.Acc_ID = ? ORDER BY End_Date ASC";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(auctions_Select);
@@ -62,6 +62,7 @@
 					<% do { 
 						float bid_amount = Float.parseFloat(rs.getString("Bid_Amount"));
 						float curr_price = Float.parseFloat(rs.getString("Current_price"));
+						float reserve = Float.parseFloat(rs.getString("Min_price"));
 						java.util.Date date = new Date();
 						Timestamp currentDate = new java.sql.Timestamp(date.getTime());
 						Timestamp endingDate = rs.getTimestamp("End_Date");
@@ -99,11 +100,14 @@
 							   			%> You are losing. <% 
 							   		}
 								}else {
-									if(bid_amount == curr_price) {
-										%> You won! <% 
+									if(bid_amount == curr_price && bid_amount >= reserve) {
+										%> You've won! <% 
 									}
-							   		else { 
-								   			%> You lost. <% 
+							   		else if(bid_amount == curr_price){ 
+								   			%> Your winning bid did not meet the seller's reserved price. You've lost. <% 
+							   		}
+							   		else {
+							   			%> You've lost! <% 
 							   		}
 								}
 						%>	   			
