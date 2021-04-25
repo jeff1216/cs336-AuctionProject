@@ -60,8 +60,8 @@ CREATE TABLE `auction` (
   `Auction_ID` varchar(45) NOT NULL,
   `Current_price` float DEFAULT NULL,
   `Start_price` float DEFAULT NULL,
-  `End_date` date DEFAULT NULL,
-  `Start_date` date DEFAULT NULL,
+  `End_date` datetime DEFAULT NULL,
+  `Winner` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Auction_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -87,8 +87,8 @@ CREATE TABLE `bid_on` (
   `Bid_ID` varchar(45) NOT NULL,
   PRIMARY KEY (`Auction_ID`,`Bid_ID`),
   KEY `Bid_ID3` (`Bid_ID`),
-  CONSTRAINT `Auction_ID3` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Bid_ID3` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Auction_ID3` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Bid_ID3` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,7 +111,7 @@ DROP TABLE IF EXISTS `bids`;
 CREATE TABLE `bids` (
   `Bid_ID` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Bid_amount` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Date` date NOT NULL,
+  `Date` datetime NOT NULL,
   PRIMARY KEY (`Bid_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -162,7 +162,7 @@ CREATE TABLE `generates` (
   `Item_ID` int NOT NULL,
   `Acc_ID` varchar(45) NOT NULL,
   `isAdmin` tinyint NOT NULL DEFAULT '0',
-  `Date` date NOT NULL,
+  `Date` datetime NOT NULL,
   `Type` varchar(45) NOT NULL,
   PRIMARY KEY (`Item_ID`,`Acc_ID`),
   KEY `Acc_ID4_idx` (`Acc_ID`),
@@ -191,8 +191,8 @@ CREATE TABLE `has_item` (
   `Item_ID` varchar(45) NOT NULL,
   PRIMARY KEY (`Auction_ID`,`Item_ID`),
   KEY `Item_ID_idx` (`Item_ID`),
-  CONSTRAINT `Auction_ID` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Item_ID` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Auction_ID` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Item_ID` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -217,8 +217,8 @@ CREATE TABLE `interested_item` (
   `Item_ID` varchar(45) NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Item_ID`),
   KEY `Item_ID_idx` (`Item_ID`),
-  CONSTRAINT `Acc_ID3` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Item_ID3` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Acc_ID3` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Item_ID3` FOREIGN KEY (`Item_ID`) REFERENCES `pc_part` (`Item_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -245,8 +245,8 @@ CREATE TABLE `makes_bid` (
   `Upper_limit` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Acc_ID`,`Bid_ID`),
   KEY `Bid_ID_idx` (`Bid_ID`),
-  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Acc_ID` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Bid_ID` FOREIGN KEY (`Bid_ID`) REFERENCES `bids` (`Bid_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -296,8 +296,8 @@ CREATE TABLE `posts` (
   `Acc_ID` varchar(45) NOT NULL,
   PRIMARY KEY (`Auction_ID`,`Acc_ID`),
   KEY `Acc_ID_idx` (`Acc_ID`),
-  CONSTRAINT `Acc_ID2` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Auction_ID2` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Acc_ID2` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`) ON UPDATE CASCADE,
+  CONSTRAINT `Auction_ID2` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -404,4 +404,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 17:51:29
+-- Dump completed on 2021-04-24 19:28:50
