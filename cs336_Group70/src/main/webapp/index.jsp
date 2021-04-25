@@ -15,10 +15,11 @@ response.sendRedirect("login.jsp");
 %>
 <%@ include file="navbar.jsp"%>
 
-Logged in Successfully. 
+<h2>Welcome <%=session.getAttribute("user")%>! </h2> 
 <br>
-Welcome <%=session.getAttribute("user")%>!  
-<br>
+
+
+
 
 <%
     }
