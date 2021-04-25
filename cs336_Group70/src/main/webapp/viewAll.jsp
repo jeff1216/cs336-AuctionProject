@@ -34,11 +34,11 @@
 			
 			
 			//Make a select statement for the auctions table:
-			String auctions_Select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID";
+			String auctions_Select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID INNER JOIN has_item ON auction.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(auctions_Select);
-	 
+	
 			
 			//Run the select query against the DB
 			ResultSet auctionsRS = ps.executeQuery();
@@ -56,7 +56,7 @@
 					<tr>
 						<td>
 							<a href="auction.jsp?auctionId=<%= auctionsRS.getString("Auction_ID") %>">
-									<%= auctionsRS.getString("Auction_ID") %>
+									<%= auctionsRS.getString("Name") %>
 							</a>
 						</td>
 						<td><%= auctionsRS.getString("Current_price") %></td>

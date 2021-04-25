@@ -216,7 +216,7 @@ DROP TABLE IF EXISTS `has_item`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `has_item` (
   `Auction_ID` varchar(45) NOT NULL,
-  `Item_ID` varchar(45) NOT NULL,
+  `	` varchar(45) NOT NULL,
   PRIMARY KEY (`Auction_ID`,`Item_ID`),
   KEY `Item_ID_idx` (`Item_ID`),
   CONSTRAINT `Auction_ID` FOREIGN KEY (`Auction_ID`) REFERENCES `auction` (`Auction_ID`) ON UPDATE CASCADE,

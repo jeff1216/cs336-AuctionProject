@@ -34,7 +34,7 @@
 			
 			
 			//Make a select statement for the auctions table:
-			String auctions_Select = "SELECT * FROM makes_bid INNER JOIN bids ON makes_bid.Bid_ID = bids.Bid_ID INNER JOIN bid_on ON bids.Bid_ID = bid_on.Bid_ID WHERE Acc_ID = ?";
+			String auctions_Select = "SELECT * FROM makes_bid INNER JOIN bids ON makes_bid.Bid_ID = bids.Bid_ID INNER JOIN bid_on ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN has_item ON bid_on.Auction_ID = has_item.Auction_ID INNER JOIN auction ON auction.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID WHERE Acc_ID = ?";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(auctions_Select);
@@ -48,14 +48,18 @@
 				<table>
 					<tr>
 						<th>Auction</th>
+						<th>Your Bid Amount</th>
+						<th>Current Winning Bid</th>
 					</tr>
 					<% do { %>
 					<tr>
 						<td>
 							<a href="auction.jsp?auctionId=<%= rs.getString("Auction_ID") %>">
-									<%= rs.getString("Auction_ID") %>
+									<%= rs.getString("Name") %>
 							</a>
 						</td>
+						<td><%= rs.getString("Bid_Amount") %></td>
+						<td><%= rs.getString("Current_price") %></td>
 					</tr>
 					<% } while (rs.next()); %>
 				</table>

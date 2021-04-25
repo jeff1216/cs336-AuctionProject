@@ -66,16 +66,11 @@
 				
 			<h1>Manual Bid:</h1>
 			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
-
-				<input type= "float" name= "Bid_Amount" placeholder= "0.00" required>
-				<input type= "submit" value= "Place Bid"> 
-			</form>
-
 				<table>
 					<tr>
 						<td>Bid Amount</td>
 						<td>
-							<input type= "number" name= "Bid_Amount" placeholder= "0.00" required>
+							<input type= "float" name= "Bid_Amount" placeholder= "0.00" required>
 						</td>
 					</tr>
 					<tr>
