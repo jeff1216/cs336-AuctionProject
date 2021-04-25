@@ -36,7 +36,7 @@ response.sendRedirect("login.jsp");
 
 			<h4>Your Notifications</h4>
 			<%
-			String alertQuery = "SELECT * FROM alerts WHERE acc_ID = ? ORDER BY time ASC";
+			String alertQuery = "SELECT * FROM alerts INNER JOIN has_item ON alerts.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON has_item.Item_ID = pc_part.Item_ID WHERE acc_ID = ? ORDER BY time ASC";
 			PreparedStatement ps = con.prepareStatement(alertQuery);
 			ps.setString(1, (String) session.getAttribute("user"));
 			ResultSet rs = ps.executeQuery();
@@ -47,6 +47,7 @@ response.sendRedirect("login.jsp");
 				<tr>
 					<th>Alert ID</th>
 					<th>Message</th>
+					<th>Item</th>
 					<th>View Auction</th>
 					<th>Date Time</th>
 					<th>Delete Message</th>
@@ -57,6 +58,7 @@ response.sendRedirect("login.jsp");
 				<tr>
 					<td style='text-align:center'><%= alertID %></td>
 					<td style='text-align:center'><%= rs.getString("Message") %></td>
+					<td style='text-align:center'><%= rs.getString("Name") %></td>
 					<td style='text-align:center'><a href="auction.jsp?auctionId=<%= rs.getString("Auction_ID") %>">
 													View
 												 </a>
