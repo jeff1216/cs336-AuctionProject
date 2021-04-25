@@ -182,6 +182,7 @@
 						<td>
 							<input type= "float" name= "Bid_Amount" placeholder= "0.00" required>
 							<input type ="hidden" name= "Item_Name" value = <%= itemName %> >
+							<input type ="hidden" name= "auctionID" value = <%= auctionID %> >
 						</td>
 					</tr>
 					<tr>

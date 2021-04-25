@@ -57,6 +57,8 @@ DROP TABLE IF EXISTS `alerts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alerts` (
+  `Alert_ID` varchar(45) NOT NULL,
+  `Auction_ID` varchar(45) NOT NULL,
   `Acc_ID` varchar(45) NOT NULL,
   `Message` varchar(300) NOT NULL,
   `time` DateTime NOT NULL,
