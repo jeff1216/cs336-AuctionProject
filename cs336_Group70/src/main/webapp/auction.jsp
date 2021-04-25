@@ -70,7 +70,7 @@
 				ps = con.prepareStatement(highestBidderQuery);
 				ps.setString(1, auctionRS.getString("Auction_ID"));
 				ResultSet highestBidderRS = ps.executeQuery();
-				if(highestBidderRS.next()) {
+				if(highestBidderRS.first()) {
 					highestBidder = highestBidderRS.getString("makes_bid.Acc_ID");
 				}
 			%>

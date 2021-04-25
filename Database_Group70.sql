@@ -59,6 +59,7 @@ DROP TABLE IF EXISTS `alerts`;
 CREATE TABLE `alerts` (
   `Acc_ID` varchar(45) NOT NULL,
   `Message` varchar(300) NOT NULL,
+  `time` DateTime NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Message`),
   CONSTRAINT `Acc_ID5` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
