@@ -79,7 +79,7 @@
 						}
 						
 						String highestBidder = "";
-						String highestBidderQuery = "SELECT * FROM auction INNER JOIN bid_on ON auction.Auction_ID= bid_on.Auction_ID INNER JOIN bids ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN makes_bid ON bids.Bid_ID = makes_bid.Bid_ID WHERE auction.Auction_ID = ? ORDER By Bid_amount DESC";
+						String highestBidderQuery = "SELECT * FROM auction INNER JOIN bid_on ON auction.Auction_ID= bid_on.Auction_ID INNER JOIN bids ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN makes_bid ON bids.Bid_ID = makes_bid.Bid_ID WHERE auction.Auction_ID = ? ORDER By CAST(Bid_amount AS UNSIGNED) DESC";
 						ps = con.prepareStatement(highestBidderQuery);
 						ps.setString(1, auctionsRS.getString("Auction_ID"));
 						ResultSet highestBidderRS = ps.executeQuery();
