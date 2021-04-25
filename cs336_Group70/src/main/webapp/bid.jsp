@@ -269,27 +269,26 @@
 			ps11.executeUpdate();
 			
 			
-			/*
+			
 			//Send alerts to other bidders.
 			String otherBidderQuery = "Select DISTINCT * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
-			PreparedStatement ps8 = con.prepareStatement(otherBidderQuery);
-			ps8.setString(1, auctionID);
-			ps8.setString(2, user);
-			ResultSet otherBidderRS = ps8.executeQuery();
+			PreparedStatement ps12 = con.prepareStatement(otherBidderQuery);
+			ps12.setString(1, auctionID);
+			ps12.setString(2, user);
+			ResultSet otherBidderRS = ps12.executeQuery();
 			while(otherBidderRS.next()) {
 				String alertID = String.valueOf( (long) (Math.random() * 100000l));
 				String msg = "You have been outbidded.";
 				String msgQuery = "INSERT INTO alerts VALUES(?, ?, ?, ?, ?);";
-				PreparedStatement ps9 = con.prepareStatement(msgQuery);
-				ps9.setString(1, alertID);
-				ps9.setString(2, auctionID);
-				ps9.setString(3, otherBidderRS.getString("Acc_ID"));
-				ps9.setString(4, msg);
-				ps9.setTimestamp(5,currentDate);
-				ps9.executeUpdate();				
+				PreparedStatement ps13 = con.prepareStatement(msgQuery);
+				ps13.setString(1, alertID);
+				ps13.setString(2, auctionID);
+				ps13.setString(3, otherBidderRS.getString("Acc_ID"));
+				ps13.setString(4, msg);
+				ps13.setTimestamp(5,currentDate);
+				ps13.executeUpdate();				
 			}
 			
-			*/
 			
 			//Close the connection. 
 			con.close();
