@@ -180,6 +180,96 @@
 			ps7.setString(2, auctionID);
 			ps7.executeUpdate();
 			
+			
+			String queryAutobid = "select * from auction " +
+					"inner join bid_on on auction.Auction_ID = bid_on.Auction_ID " +
+					"inner join makes_bid on bid_on.Bid_ID = makes_bid.Bid_ID " +
+					"where auction.Auction_ID = '" + auctionID + "' ORDER By CAST(Upper_limit AS UNSIGNED) DESC;";
+					
+			ResultSet autoBidders = stmt.executeQuery(queryAutobid);
+			ArrayList<String[]> autoBids = new ArrayList<String[]>();
+			while(autoBidders.next()){
+				if(autoBidders.getString("Increment") != null){
+					autoBids.add(new String[]{autoBidders.getString("Acc_ID"), 
+							Float.toString(autoBidders.getFloat("Increment")), 
+							Float.toString(autoBidders.getFloat("Upper_limit"))});
+				}
+				
+			}
+			
+			String prevBidder = user;
+			float prevBidAmount = bidAmount;
+			
+			while(autoBids.size() > 0){
+				for(int i = 0; i < autoBids.size(); i++) {
+					String autoUsername = autoBids.get(i)[0];
+					if(autoUsername.equals(prevBidder)){
+						continue;
+					}
+					
+					float lastBid = prevBidAmount;
+					float autoIncrement = Float.parseFloat(autoBids.get(i)[1]);
+					float autoUpperLimit = Float.parseFloat(autoBids.get(i)[2]);
+					float newAmount = lastBid+autoIncrement;
+					if(newAmount > autoUpperLimit) {
+						autoBids.remove(i);
+					}
+					else {
+						prevBidder = autoUsername;
+						prevBidAmount = newAmount;
+					}
+				}
+				if(autoBids.size() == 1) {
+					break;
+				}
+			}
+			
+			//Create new bid_ID, obtain bid amount, obtain current date
+			String autoBid_ID = UUID.randomUUID().toString();
+			
+			String insertQuery3 = "INSERT INTO bids VALUES(?, ?, ?)";
+			PreparedStatement ps8 = con.prepareStatement(insertQuery3);
+			ps8.setString(1, autoBid_ID);
+			ps8.setFloat(2, prevBidAmount);
+			ps8.setTimestamp(3, currentDate);
+			ps8.executeUpdate();
+			
+			//insert the new bid into bid_on
+			String insertQuery4 = "INSERT INTO bid_on VALUES(?, ?)";
+			PreparedStatement ps9 = con.prepareStatement(insertQuery4);
+			ps9.setString(1, auctionID);
+			ps9.setString(2, autoBid_ID);
+			ps9.executeUpdate();
+			
+			
+			//FIND OLD BIDID
+			String oldBidQuery2 = "Select * FROM makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id inner join auction ON auction.auction_Id = bid_on.auction_Id WHERE bid_on.auction_id = ? and acc_id = ? ORDER BY current_price desc";
+			PreparedStatement psOldBid2 = con.prepareStatement(oldBidQuery2);
+			psOldBid2.setString(1, auctionID);
+			psOldBid2.setString(2, prevBidder);
+			ResultSet oldBidRS2 = psOldBid2.executeQuery();
+			String oldBid2 ="";
+			if(oldBidRS2.first()) {
+				oldBid2 = oldBidRS2.getString("Bid_ID");
+			}
+			
+			//update
+			String updateQuery3 = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ? and Bid_ID = ?";
+			PreparedStatement ps10 = con.prepareStatement(updateQuery3);
+			ps10.setString(1, autoBid_ID);
+			ps10.setString(2, prevBidder);
+			ps10.setString(3, oldBid2);
+			ps10.executeUpdate();
+			
+			//Update current price in Auction Table
+			String updateQuery4 = "UPDATE auction SET Current_price = ? WHERE Auction_ID = ?";
+			PreparedStatement ps11 = con.prepareStatement(updateQuery4);
+			ps11.setFloat(1, prevBidAmount);
+			ps11.setString(2, auctionID);
+			ps11.executeUpdate();
+			
+			
+			/*
 			//Send alerts to other bidders.
 			String otherBidderQuery = "Select * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
 			PreparedStatement ps8 = con.prepareStatement(otherBidderQuery);
@@ -198,6 +288,8 @@
 				ps9.setTimestamp(5,currentDate);
 				ps9.executeUpdate();				
 			}
+			
+			*/
 			
 			//Close the connection. 
 			con.close();
