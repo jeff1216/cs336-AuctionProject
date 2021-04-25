@@ -208,6 +208,13 @@
 						</td>
 					</tr>	
 					<tr>
+					<tr>
+						<td>Initial Bid Amount</td>
+						<td>
+							<input type= "number" name= "initialBid" placeholder= "0.00" required>	
+						</td>
+					</tr>	
+					<tr>
 						<td>
 							<input type= "submit" value= "Set Up AutoBid"> 
 						</td>

@@ -8,7 +8,9 @@ public class ApplicationDB {
 	
 	/**********************ENTER YOUR MySql root PASSWORD HERE***********************************/
 	
-	private static final String password  = "107785772z!";
+
+	private static final String password  = "catherine914";
+
 
 	/****************************************************************************************/
 	
