@@ -29,7 +29,7 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 	
-			//Get account auction from request
+			//Get account auction from url
 			String auctionID = (String) request.getParameter("auctionId");
 			
 			
@@ -51,6 +51,7 @@
 						<th>Current Bid</th>
 						<th>Seller</th>
 						<th>End Date</th>
+						<th>Status</th>
 					</tr>
 					<% do { %>
 					<tr>
@@ -62,7 +63,7 @@
 					<% } while (auctionRS.next()); %>
 				</table>
 				<%	} 	%>
-			
+
 			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
 				<input type= "number" name= "Bid_Amount" placeholder= "0.00" required>
 				<input type= "submit" value= "Place Bid"> 
