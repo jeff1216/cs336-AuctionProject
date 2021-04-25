@@ -66,7 +66,8 @@
 				<%	} 	%>
 			
 			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
-				<input type= "submit" value= "Bid"> 
+				<input type= "number" name= "Bid_Amount" placeholder= "0.00" required>
+				<input type= "submit" value= "Place Bid"> 
 			</form>
 			<form action= "autobid.jsp?auctionId=<%= auctionID %>" method = "POST">
 				<input type= "submit" value= "Set Up AutoBid"> 
