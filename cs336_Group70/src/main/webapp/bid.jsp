@@ -181,7 +181,7 @@
 			ps7.executeUpdate();
 			
 			//Send alerts to other bidders.
-			String otherBidderQuery = "Select * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
+			String otherBidderQuery = "Select DISTINCT * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
 			PreparedStatement ps8 = con.prepareStatement(otherBidderQuery);
 			ps8.setString(1, auctionID);
 			ps8.setString(2, user);
