@@ -14,7 +14,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
+<%   if ((session.getAttribute("user") == null)) {
+
+		response.sendRedirect("login.jsp");
+
+	} else {
+%>
+		<%@ include file="navbar.jsp"%>
+	<% 
 	try {
 		//Get the database connection
 		ApplicationDB db = new ApplicationDB();	
@@ -67,8 +74,9 @@
 		
 		//insert into pc_part
 		String itemID = UUID.randomUUID().toString();
-		String q = "INSERT INTO pc_part VALUES ('" + itemID + "','" + itemName + "', '" + cond + "');";
+		String q = "INSERT INTO pc_part VALUES ('" + itemID + "','" + itemName + "', '" + cond + "', '" + itemType + "');";
 		con.prepareStatement(q).executeUpdate();
+		
 		
 		
 		//insert into ram/cpu/psu table
@@ -102,12 +110,14 @@
 		
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
-		out.print("Insert success");
-		response.sendRedirect("index.jsp");
+		%> You've posted a new auction! <% 
+		//response.sendRedirect("index.jsp");
 		
 	} catch (Exception ex) {
 		out.print(ex);
 		out.print("Insert failed");
+	}
+	
 	}
 %>
 </body>
