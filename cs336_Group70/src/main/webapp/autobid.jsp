@@ -182,7 +182,7 @@
 			String queryAutobid = "select * from auction " +
 					"inner join bid_on on auction.Auction_ID = bid_on.Auction_ID " +
 					"inner join makes_bid on bid_on.Bid_ID = makes_bid.Bid_ID " +
-					"where auction.Auction_ID = '" + auctionID + "';";
+					"where auction.Auction_ID = '" + auctionID + "' ORDER By CAST(Upper_limit AS UNSIGNED) DESC;";
 					
 			ResultSet autoBidders = stmt.executeQuery(queryAutobid);
 			ArrayList<String[]> autoBids = new ArrayList<String[]>();
@@ -245,7 +245,7 @@
 			PreparedStatement psOldBid2 = con.prepareStatement(oldBidQuery2);
 			psOldBid2.setString(1, auctionID);
 			psOldBid2.setString(2, prevBidder);
-			ResultSet oldBidRS2 = psOldBid.executeQuery();
+			ResultSet oldBidRS2 = psOldBid2.executeQuery();
 			String oldBid2 ="";
 			if(oldBidRS2.first()) {
 				oldBid2 = oldBidRS2.getString("Bid_ID");
@@ -265,6 +265,8 @@
 			ps11.setFloat(1, prevBidAmount);
 			ps11.setString(2, auctionID);
 			ps11.executeUpdate();
+			
+			con.close();
 			
 		} catch (Exception ex) {
 			out.print(ex);
