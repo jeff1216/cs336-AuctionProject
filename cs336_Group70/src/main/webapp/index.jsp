@@ -18,6 +18,7 @@ response.sendRedirect("login.jsp");
 <h2>Welcome <%=session.getAttribute("user")%>! </h2> 
 <br>
 
+<h4>Your Notifications</h4>
 
 
 
