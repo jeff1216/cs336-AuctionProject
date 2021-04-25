@@ -33,7 +33,7 @@ if ((session.getAttribute("user") == null)) {
 			<td>
 				<input 
 					type="text" 
-					name="itemname"
+					name="itemName"
 					required = "required">
 			</td>
 		</tr>
@@ -58,75 +58,99 @@ if ((session.getAttribute("user") == null)) {
 			<select 
 					name="itemtype"
 					required = "required">
-					<option value="notebook">Notebook</option>
-					<option value="textbook">Textbook</option>
-					<option value="calculator">Calculator</option>
+					<option value="ram">RAM</option>
+					<option value="cpu">CPU</option>
+					<option value="psu">Power Supply</option>
 				</select>
 			</td>
 		</tr>
-		<tr>
+		<tr><td>Note: For entries regarding other types, please fill in with anything.</td> </tr>
 		
-		<td>Color (notebook)</td>
+		<tr>		
+		<td>RAM Type (RAM)</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="notebookColor" title="NA if not notebook" required="required">
+				<input type="text" name="ramType" title="NA if not RAM" required="required">
 			</td>
 		</tr>
 		<tr>
-		<td>Name (notebook)</td>
+		<td>Size in GB (RAM)</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="notebookName" title="NA if not notebook" required="required">
-			</td>
-		</tr>
-		<tr>
-		
-		<td>Title (textbook)</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="text" name="textbookTitle" title="NA if not textbook" required="required">
-			</td>
-		</tr>
-		<tr>
-		<td>Author (textbook)</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="text" name="textbookAuthor" title="NA if not textbook" required="required">
+				<input type="number" name="ramSize" title="NA if not RAM" required="required">
 			</td>
 		</tr>
 		<tr>
 		
-		<td>Brand (calculator)</td>
+		<td>Speed in MHz (RAM)</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="calcBrand" title="NA if not calculator" required="required">
+				<input type="number" name="ramSpeed" title="NA if not RAM" required="required">
 			</td>
 		</tr>
 		<tr>
-		<td>Model (calculator)</td>
+		<td>Core Count (CPU)</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="calcModel" title="NA if not calculator" required="required">
+				<input type="number" name="cpuCore" title="NA if not CPU" required="required">
+			</td>
+		</tr>
+		<tr>
+		
+		<td>Core Clock Speed in GHz (CPU)</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="number" name="cpuClock" title="NA if not CPU" required="required">
+			</td>
+		</tr>
+		<tr>
+		<td>Series (CPU)</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="cpuSeries" title="NA if not CPU" required="required">
+			</td>
+		</tr>
+		<tr>
+		<td>Wattage in Watts (Power Supply)</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="number" name="psuWattage" title="NA if not Power Supply" required="required">
+			</td>
+		</tr>
+		<tr>
+		<td>Modularity (Power Supply)</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="psuModularity" title="NA if not Power Supply" required="required">
+			</td>
+		</tr>
+		<tr>
+		<td>Efficiency Rating in % (Power Supply)</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="number" name="psuEfficiency" title="NA if not Power Supply" required="required">
 			</td>
 		</tr>
 		<tr>
 		
 		
-		<td>Closing Date</td>
+		<td>Closing Date: Format is YYYY-MM-DD hh:mm:ss</td>
 		</tr>
 		<tr>
 			<td>
 				<input 
 					type="text" 
-					name="closedate"
+					name="closeDate"
 					pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" 
-					title="Required format is YYYY-MM-DD hh:mm:ss. For example, 2020-04-21 15:32:00 is valid."
 					required = "required">
 			</td>
 		</tr>
@@ -135,7 +159,7 @@ if ((session.getAttribute("user") == null)) {
 		</tr>
 		<tr>
 			<td>
-				<input type="number" name="reserve" min="0.01" step="0.01" max="2500" required="required" >
+				<input type="number" name="minBid" min="0.01" step="0.01" max="2500" required="required" >
 			</td>
 		</tr>
 		</table>
