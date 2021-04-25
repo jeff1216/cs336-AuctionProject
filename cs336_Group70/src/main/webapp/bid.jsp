@@ -81,7 +81,6 @@
 			String bid_ID = UUID.randomUUID().toString();
 			java.util.Date date = new Date();
 			Object currentDate = new java.sql.Timestamp(date.getTime());
-			DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 			
 			//insert a new bid into bids table

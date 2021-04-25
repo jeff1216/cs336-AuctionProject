@@ -38,7 +38,7 @@
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(auctions_Select);
-	
+	 
 			
 			//Run the select query against the DB
 			ResultSet auctionsRS = ps.executeQuery();
