@@ -7,6 +7,24 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%   if ((session.getAttribute("user") == null)) {
+
+		response.sendRedirect("login.jsp");
+
+	} else {
+%>
+		<%@ include file="navbar.jsp"%>
+	<% 
+		try {
+			
+			
+		} catch (Exception ex) {
+			out.print(ex);
+			out.print(" Place autobid failed");
+		}
+	
+	}
+%>
 
 </body>
 </html>
