@@ -49,7 +49,7 @@
 			//Get auction ID from url
 			String auctionID = (String) request.getParameter("auctionId");
 			
-			//Query to find seller's id using auction_ID
+			//Query posts table to find seller's id using auction_ID
 			String seller; 
 			float bidAmount = Float.parseFloat(request.getParameter("Bid_Amount"));
 			String postQuery = "SELECT * FROM posts WHERE Auction_ID = ?";
@@ -59,28 +59,58 @@
 			postRS.next();
 			seller = postRS.getString("Acc_ID");
 			
-			//Query to find currentPrice of the auction_ID
+			//Query auction table to find currentPrice and ending date
 			Float currentPrice;
-			String priceQuery = "SELECT * FROM auction WHERE Auction_ID = ?";
-			ps = con.prepareStatement(priceQuery);
+			String auctionQuery = "SELECT * FROM auction WHERE Auction_ID = ?";
+			ps = con.prepareStatement(auctionQuery);
 			ps.setString(1, auctionID);
-			ResultSet priceRS = ps.executeQuery();
-			priceRS.next();
-			currentPrice = priceRS.getFloat("Current_price");
+			ResultSet auctionRS = ps.executeQuery();
+			auctionRS.next();
+			currentPrice = auctionRS.getFloat("Current_price");
+			java.util.Date date = new Date();
+			Timestamp currentDate = new java.sql.Timestamp(date.getTime());
+			Timestamp endingDate = auctionRS.getTimestamp("End_Date");
+			boolean timeCheck;
+			if(currentDate.before(endingDate)){
+				timeCheck = true;
+			}
+			else {
+				timeCheck = false;
+			}
 			
+			//Query auction join bid_on join bids, to find current highest bid
+			String highestBidder;
+			String highestBidQuery = "SELECT * FROM auction INNER JOIN bid_on ON auction.Auction_ID= bid_on.Auction_ID INNER JOIN bids ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN makes_bid ON bids.Bid_ID = makes_bid.Bid_ID WHERE auction.Auction_ID = ? ORDER By Bid_amount DESC";
+			ps = con.prepareStatement(highestBidQuery);
+			ps.setString(1, auctionID);
+			ResultSet highestBidRS = ps.executeQuery();
+			if(highestBidRS.first()) {
+				highestBidder = highestBidRS.getString("makes_bid.Acc_ID");
+			}
+			else  {
+				highestBidder = null;
+			}
+			
+			if(!timeCheck) { %>
+			Auction is closed.
+			<% return;	
+			}
 			if(user.equals(seller)) { %>
 				 You cannot bid on your own auction!  
 				<% return; 
 			 }
+			if(highestBidder!= null && highestBidder.equals(user)) { %>
+			 Bid fail. You are currently the highest bidder.
+			<% return; 
+			}
 			if(bidAmount <= currentPrice) { %>
 				Please place a bid higher than the current bid price.
 				<% return;
 			}
+
 			
 			//Create new bid_ID, obtain bid amount, obtain current date
 			String bid_ID = UUID.randomUUID().toString();
-			java.util.Date date = new Date();
-			Object currentDate = new java.sql.Timestamp(date.getTime());
 
 			
 			//insert a new bid into bids table
@@ -88,7 +118,7 @@
 			PreparedStatement ps2 = con.prepareStatement(insertQuery);
 			ps2.setString(1, bid_ID);
 			ps2.setFloat(2, bidAmount);
-			ps2.setObject(3, currentDate);
+			ps2.setTimestamp(3, currentDate);
 			ps2.executeUpdate();
 			
 			//insert the new bid into bid_on

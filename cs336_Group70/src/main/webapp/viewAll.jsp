@@ -48,9 +48,9 @@
 				<table>
 					<tr>
 						<th>Auction</th>
-						<th>Current Bid</th>
+						<th>Current Highest Bid</th>
 						<th>Seller</th>
-						<th>End Date</th>
+						<th>End DateTime</th>
 					</tr>
 					<% do { %>
 					<tr>
@@ -59,7 +59,7 @@
 									<%= auctionsRS.getString("Name") %>
 							</a>
 						</td>
-						<td><%= auctionsRS.getString("Current_price") %></td>
+						<td><%= auctionsRS.getFloat("Current_price") %></td>
 						<td><%= auctionsRS.getString("Acc_ID") %></td>
 						<td><%= auctionsRS.getString("End_date") %></td>
 					</tr>

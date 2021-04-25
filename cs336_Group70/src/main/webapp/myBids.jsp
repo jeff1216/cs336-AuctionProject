@@ -2,6 +2,10 @@
     pageEncoding="ISO-8859-1" import="com.cs336_Group70.pkg.*"%>
 <!--Import some libraries that have classes that we need -->
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.sql.Time" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,12 +54,24 @@
 						<th>Auction</th>
 						<th>Seller</th>
 						<th>Your Bid</th>
-						<th>Current Bid</th>
-						<th>Status</th>
+						<th>Current Highest Bid</th>
+						<th>End DateTime</th>
+						<th>Auction Status</th>
+						<th>Your Status</th>
 					</tr>
 					<% do { 
 						float bid_amount = Float.parseFloat(rs.getString("Bid_Amount"));
 						float curr_price = Float.parseFloat(rs.getString("Current_price"));
+						java.util.Date date = new Date();
+						Timestamp currentDate = new java.sql.Timestamp(date.getTime());
+						Timestamp endingDate = rs.getTimestamp("End_Date");
+						boolean timeCheck;
+						if(currentDate.before(endingDate)){
+							timeCheck = true;
+						}
+						else {
+							timeCheck = false;
+						}
 					
 					%>
 					<tr>
@@ -65,15 +81,33 @@
 							</a>
 						</td>
 						<td><%= rs.getString("posts.Acc_ID") %></td>
-						<td><%= rs.getString("Bid_Amount") %></td>
-						<td><%= rs.getString("Current_price") %></td>
-						<td><% if(bid_amount == curr_price) { %>
-							 		You are winning! 
+						<td><%= rs.getFloat("Bid_Amount") %></td>
+						<td><%= rs.getFloat("Current_price") %></td>
+						<td><%= rs.getString("End_Date") %></td>
+						<td><% if(timeCheck) { %>
+							 		Ongoing. 
 							<% }
 							   else { %>
-							   		You are losing.
+							   		Closed.
 							<% } %>
-							 
+						</td>	
+						<td><% if(timeCheck) { 
+									if(bid_amount == curr_price) {
+										%> You are winning! <% 
+									}
+							   		else { 
+							   			%> You are losing. <% 
+							   		}
+								}else {
+									if(bid_amount == curr_price) {
+										%> You won! <% 
+									}
+							   		else { 
+								   			%> You lost. <% 
+							   		}
+								}
+						%>	   			
+						</td>	 
 					</tr>
 					<% } while (rs.next()); %>
 				</table>
