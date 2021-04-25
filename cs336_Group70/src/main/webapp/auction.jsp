@@ -38,6 +38,7 @@
 			String auctionID = (String) request.getParameter("auctionId");
 			
 			
+			
 			//select statement auction inner join post
 			String select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID INNER JOIN has_item ON auction.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID Where auction.Auction_ID= ?";
 			
@@ -116,11 +117,12 @@
 			auctionRS.first();
 			String partType = auctionRS.getString("Type");
 			String itemID = auctionRS.getString("Item_ID");
+			String itemName = auctionRS.getString("Name");
 			%>
 			
 			<br>
 			<h3><u>Details</u></h3>
-			Item name: <%= auctionRS.getString("Name") %>
+			Item name: <%= itemName %>
 			<br>
 			Condition:	<%= auctionRS.getString("Condition") %>
 			<br>
@@ -179,6 +181,7 @@
 						<td>Bid Amount</td>
 						<td>
 							<input type= "float" name= "Bid_Amount" placeholder= "0.00" required>
+							<input type ="hidden" name= "Item_Name" value = <%= itemName %> >
 						</td>
 					</tr>
 					<tr>

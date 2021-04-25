@@ -48,6 +48,9 @@
 			String user = (String) session.getAttribute("user");
 			//Get auction ID from url
 			String auctionID = (String) request.getParameter("auctionId");
+			//Get auction Item name
+			String itemName = (String) request.getParameter("Item_Name");
+			
 			
 			//Query posts table to find seller's id using auction_ID
 			String seller; 
@@ -147,14 +150,16 @@
 			psOldBid.setString(1, auctionID);
 			psOldBid.setString(2, user);
 			ResultSet oldBidRS = psOldBid.executeQuery();
-			oldBidRS.next();
-			String oldBid = oldBidRS.getString("Bid_ID");
+			String oldBid ="";
+			if(oldBidRS.first()) {
+				oldBid = oldBidRS.getString("Bid_ID");
+			}
 			if(exists) {
 				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ? and Bid_ID = ?";
 				PreparedStatement ps5 = con.prepareStatement(updateQuery);
 				ps5.setString(1, bid_ID);
 				ps5.setString(2, user);
-				ps5.setString(3,oldBid);
+				ps5.setString(3, oldBid);
 				ps5.executeUpdate();
 				%> You've updated your bid!<%
 			} else {
@@ -174,6 +179,22 @@
 			ps7.setFloat(1, bidAmount);
 			ps7.setString(2, auctionID);
 			ps7.executeUpdate();
+			
+			//Send alerts to other bidders.
+			String otherBidderQuery = "Select * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
+			PreparedStatement ps8 = con.prepareStatement(otherBidderQuery);
+			ps8.setString(1, auctionID);
+			ps8.setString(2, user);
+			ResultSet otherBidderRS = ps8.executeQuery();
+			while(otherBidderRS.next()) {
+				String msg = "You have been outbidded on Auction Item: " + itemName;
+				String msgQuery = "INSERT INTO alerts VALUES(?, ?);";
+				PreparedStatement ps9 = con.prepareStatement(msgQuery);
+				ps9.setString(1, otherBidderRS.getString("Acc_ID"));
+				ps9.setString(2, msg);
+				ps9.executeUpdate();				
+			}
+			
 			//Close the connection. 
 			con.close();
 			
