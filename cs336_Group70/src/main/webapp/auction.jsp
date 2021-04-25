@@ -63,13 +63,44 @@
 					<% } while (auctionRS.next()); %>
 				</table>
 				<%	} 	%>
-
+				
+			<h1>Manual Bid:</h1>
 			<form action= "bid.jsp?auctionId=<%= auctionID %>" method = "POST">
-				<input type= "number" name= "Bid_Amount" placeholder= "0.00" required>
-				<input type= "submit" value= "Place Bid"> 
-			</form>
+				<table>
+					<tr>
+						<td>Bid Amount</td>
+						<td>
+							<input type= "number" name= "Bid_Amount" placeholder= "0.00" required>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type= "submit" value= "Place Bid"> 
+						</td>
+					</tr>
+				</table>
+			</form><br>
+			<h1>Autobid:</h1>
 			<form action= "autobid.jsp?auctionId=<%= auctionID %>" method = "POST">
-				<input type= "submit" value= "Set Up AutoBid"> 
+				<table>
+					<tr>
+						<td>Increment Amount</td>
+						<td>
+							<input type= "number" name= "increment" placeholder= "0.00" required>
+						</td>
+					</tr>
+					<tr>
+						<td>Upper Limit Amount</td>
+						<td>
+							<input type= "number" name= "upperLimit" placeholder= "0.00" required>	
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							<input type= "submit" value= "Set Up AutoBid"> 
+						</td>
+					</tr>
+				</table>
 			</form>
 			<% 	
 			//Close the connection. 
