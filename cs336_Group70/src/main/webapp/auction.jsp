@@ -70,7 +70,7 @@
 				ps = con.prepareStatement(highestBidderQuery);
 				ps.setString(1, auctionRS.getString("Auction_ID"));
 				ResultSet highestBidderRS = ps.executeQuery();
-				if(highestBidderRS.next()) {
+				if(highestBidderRS.first()) {
 					highestBidder = highestBidderRS.getString("makes_bid.Acc_ID");
 				}
 			%>
@@ -182,6 +182,7 @@
 						<td>
 							<input type= "float" name= "Bid_Amount" placeholder= "0.00" required>
 							<input type ="hidden" name= "Item_Name" value = <%= itemName %> >
+							<input type ="hidden" name= "auctionID" value = <%= auctionID %> >
 						</td>
 					</tr>
 					<tr>

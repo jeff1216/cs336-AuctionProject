@@ -57,8 +57,11 @@ DROP TABLE IF EXISTS `alerts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alerts` (
+  `Alert_ID` varchar(45) NOT NULL,
+  `Auction_ID` varchar(45) NOT NULL,
   `Acc_ID` varchar(45) NOT NULL,
   `Message` varchar(300) NOT NULL,
+  `time` DateTime NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Message`),
   CONSTRAINT `Acc_ID5` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
