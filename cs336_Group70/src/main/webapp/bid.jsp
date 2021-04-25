@@ -187,7 +187,7 @@
 			ps8.setString(2, user);
 			ResultSet otherBidderRS = ps8.executeQuery();
 			while(otherBidderRS.next()) {
-				String alertID = String.valueOf( (long) (Math.random() * 1000000000l));
+				String alertID = String.valueOf( (long) (Math.random() * 100000l));
 				String msg = "You have been outbidded.";
 				String msgQuery = "INSERT INTO alerts VALUES(?, ?, ?, ?, ?);";
 				PreparedStatement ps9 = con.prepareStatement(msgQuery);
