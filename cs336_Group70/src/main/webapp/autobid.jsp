@@ -166,17 +166,20 @@
 			ps7.executeUpdate();
 			
 
-			String queryAutobid = "select * from auction" +
-					"inner join bid_on on auction.Auction_ID = bid_on.Auction_ID" +
-					"inner join makes_bid on bid_on.Bid_ID = makes_bid.Bid_ID" +
-					"where auction.Auction_ID = '" + auctionID + " ';";
+			String queryAutobid = "select * from auction " +
+					"inner join bid_on on auction.Auction_ID = bid_on.Auction_ID " +
+					"inner join makes_bid on bid_on.Bid_ID = makes_bid.Bid_ID " +
+					"where auction.Auction_ID = '" + auctionID + "';";
 					
 			ResultSet autoBidders = stmt.executeQuery(queryAutobid);
 			ArrayList<String[]> autoBids = new ArrayList<String[]>();
 			while(autoBidders.next()){
-				autoBids.add(new String[]{autoBidders.getString("Acc_ID"), 
-						Float.toString(autoBidders.getFloat("Increment")), 
-						Float.toString(autoBidders.getFloat("Upper_limit"))});
+				if(autoBidders.getString("Increment") != null){
+					autoBids.add(new String[]{autoBidders.getString("Acc_ID"), 
+							Float.toString(autoBidders.getFloat("Increment")), 
+							Float.toString(autoBidders.getFloat("Upper_limit"))});
+				}
+				
 			}
 			
 			String prevBidder = user;
