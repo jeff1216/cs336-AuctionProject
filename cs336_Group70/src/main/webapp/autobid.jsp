@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Autobidder</title>
 </head>
 <body>
 <%   if ((session.getAttribute("user") == null)) {
@@ -265,6 +265,8 @@
 			ps11.setFloat(1, prevBidAmount);
 			ps11.setString(2, auctionID);
 			ps11.executeUpdate();
+			
+			
 			
 			con.close();
 			
