@@ -266,7 +266,29 @@
 			ps11.setString(2, auctionID);
 			ps11.executeUpdate();
 			
-			
+			//Send alerts to other bidders.
+			String otherBidderQuery = "Select DISTINCT * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
+			PreparedStatement ps12 = con.prepareStatement(otherBidderQuery);
+			ps12.setString(1, auctionID);
+			ps12.setString(2, prevBidder);
+			ResultSet otherBidderRS = ps12.executeQuery();
+			while(otherBidderRS.next()) {
+				String alertID = String.valueOf( (long) (Math.random() * 100000l));
+				String msg;
+				if(otherBidderRS.getString("Upper_limit") != null){
+					msg = "Your upper limit has been outbidded.";
+				}else{
+					msg = "You have been outbidded.";
+				}
+				String msgQuery = "INSERT INTO alerts VALUES(?, ?, ?, ?, ?);";
+				PreparedStatement ps13 = con.prepareStatement(msgQuery);
+				ps13.setString(1, alertID);
+				ps13.setString(2, auctionID);
+				ps13.setString(3, otherBidderRS.getString("Acc_ID"));
+				ps13.setString(4, msg);
+				ps13.setTimestamp(5,currentDate);
+				ps13.executeUpdate();				
+			}
 			
 			con.close();
 			

@@ -281,9 +281,7 @@
 			while(otherBidderRS.next()) {
 				String alertID = String.valueOf( (long) (Math.random() * 100000l));
 				String msg;
-				String upperlimit = otherBidderRS.getString("Upper_limit");
-				Float upper = Float.parseFloat(upperlimit);
-				if(upperlimit != null && upper < bidAmount){
+				if(otherBidderRS.getString("Upper_limit") != null){
 					msg = "Your upper limit has been outbidded.";
 				}else{
 					msg = "You have been outbidded.";
