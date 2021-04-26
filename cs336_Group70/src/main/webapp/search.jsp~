@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-
+<<<<<<< HEAD
 <title>Search Results</title>
 </head>
 <body>
@@ -45,6 +45,20 @@
     		</select>
   			<input type="submit" value="Submit">
 		</form>
+=======
+<title>Search Auctions</title>
+</head>
+<body>
+<%
+if ((session.getAttribute("user") == null)) {
+	response.sendRedirect("login.jsp");
+
+} else {
+%>
+<%@ include file="navbar.jsp"%>
+<p>Not yet implemented</p>
+
+>>>>>>> e0c0501653968322b94b0e4c89f2bc659f6ef5a2
 <%
     }
 %>

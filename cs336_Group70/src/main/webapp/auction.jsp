@@ -139,9 +139,9 @@
 			%> 
 				Ram Type: <%= ramRS.getString("Ram_type") %>
 				<br>
-				Ram Size: <%= ramRS.getString("Size") %>
+				Ram Size: <%= ramRS.getString("Size") %> GB
 				<br>
-				Ram Speed: <%= ramRS.getString("Speed") %>
+				Ram Speed: <%= ramRS.getString("Speed") %> MHz
 				<br>
 		<%	} 
 			else if(partType.equals("cpu")) {
@@ -153,9 +153,9 @@
 			%> 
 				CPU Series: <%= cpuRS.getString("Series") %>
 				<br>
-				CPU Core Count: <%= cpuRS.getString("Core_Count") %>
+				CPU Core Count: <%= cpuRS.getString("Core_Count") %> Core(s)
 				<br>
-				CPU Clock Speed: <%= cpuRS.getString("Core_Clock") %>
+				CPU Clock Speed: <%= cpuRS.getString("Core_Clock") %> GHz
 				<br>
 		<%	}
 			else {
@@ -165,9 +165,9 @@
 				ResultSet psuRS = ps3.executeQuery();
 				psuRS.next();
 			%> 
-				PSU Wattage: <%= psuRS.getString("Wattage") %>
+				PSU Wattage: <%= psuRS.getString("Wattage") %> Watts
 				<br>
-				PSU Efficiency Rating: <%= psuRS.getString("Efficiency_Rating") %>
+				PSU Efficiency Rating: <%= psuRS.getString("Efficiency_Rating") %>%
 				<br>
 				PSU Modularity: <%= psuRS.getString("Modularity") %>
 				<br>

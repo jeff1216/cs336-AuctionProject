@@ -2,21 +2,20 @@
     pageEncoding="ISO-8859-1" import="com.cs336_Group70.pkg.*"%>
 <!--Import some libraries that have classes that we need -->
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<%@ page import="java.util.UUID" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.sql.Timestamp" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<<<<<<< HEAD
+<meta charset="ISO-8859-1">
+=======
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>All Auctions</title>
+>>>>>>> e0c0501653968322b94b0e4c89f2bc659f6ef5a2
+<title>My Bids</title>
 </head>
 <body>
 
@@ -43,33 +42,34 @@
 			
 			
 			//Make a select statement for the auctions table:
-			String auctions_Select = "SELECT * FROM auction INNER JOIN posts ON auction.Auction_ID = posts.Auction_ID INNER JOIN has_item ON auction.Auction_ID = has_item.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID ORDER BY End_Date Asc";
+			String auctions_Select = "SELECT * FROM makes_bid INNER JOIN bids ON makes_bid.Bid_ID = bids.Bid_ID INNER JOIN bid_on ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN has_item ON bid_on.Auction_ID = has_item.Auction_ID INNER JOIN auction ON auction.Auction_ID = has_item.Auction_ID INNER JOIN posts ON has_item.Auction_ID = posts.Auction_ID INNER JOIN pc_part ON pc_part.Item_ID = has_item.Item_ID WHERE makes_bid.Acc_ID = ? ORDER BY End_Date ASC";
 			
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(auctions_Select);
-	
+			ps.setString(1, account);
 			
 			//Run the select query against the DB
-			ResultSet auctionsRS = ps.executeQuery();
-			
-
+			ResultSet rs = ps.executeQuery();
 			
 			//List all results into a table
-			if(auctionsRS.next()) { %>
-				
+			if(rs.next()) { %>
 				<table>
 					<tr>
 						<th>[Auction]</th>
 						<th>[Seller]</th>
+						<th>[Your Bid]</th>
 						<th>[Current Highest Bid]</th>
-						<th>[Current Highest Bidder]</th>
 						<th>[End DateTime]</th>
 						<th>[Auction Status]</th>
+						<th>[Your Status]</th>
 					</tr>
-					<% do {
+					<% do { 
+						float bid_amount = Float.parseFloat(rs.getString("Bid_Amount"));
+						float curr_price = Float.parseFloat(rs.getString("Current_price"));
+						float reserve = Float.parseFloat(rs.getString("Min_price"));
 						java.util.Date date = new Date();
 						Timestamp currentDate = new java.sql.Timestamp(date.getTime());
-						Timestamp endingDate = auctionsRS.getTimestamp("End_Date");
+						Timestamp endingDate = rs.getTimestamp("End_Date");
 						boolean timeCheck;
 						if(currentDate.before(endingDate)){
 							timeCheck = true;
@@ -77,40 +77,49 @@
 						else {
 							timeCheck = false;
 						}
-						
-						String highestBidder = "";
-						String highestBidderQuery = "SELECT * FROM auction INNER JOIN bid_on ON auction.Auction_ID= bid_on.Auction_ID INNER JOIN bids ON bids.Bid_ID = bid_on.Bid_ID INNER JOIN makes_bid ON bids.Bid_ID = makes_bid.Bid_ID WHERE auction.Auction_ID = ? ORDER By CAST(Bid_amount AS UNSIGNED) DESC";
-						ps = con.prepareStatement(highestBidderQuery);
-						ps.setString(1, auctionsRS.getString("Auction_ID"));
-						ResultSet highestBidderRS = ps.executeQuery();
-						if(highestBidderRS.next()) {
-							highestBidder = highestBidderRS.getString("makes_bid.Acc_ID");
-						}
-						%>
+					
+					%>
 					<tr>
-						<td style='text-align:center'>
-							<a href="auction.jsp?auctionId=<%= auctionsRS.getString("Auction_ID") %>">
-									<%= auctionsRS.getString("Name") %>
+						<td>
+							<a href="auction.jsp?auctionId=<%= rs.getString("Auction_ID") %>">
+									<%= rs.getString("Name") %>
 							</a>
 						</td>
-						<td style='text-align:center'><%= auctionsRS.getString("posts.Acc_ID") %></td>
-						<td style='text-align:center'><%= auctionsRS.getFloat("Current_price") %></td>
-						<td style='text-align:center'><%= highestBidder %></td>
-						<td style='text-align:center'><%= auctionsRS.getString("End_date") %></td>
-						<td style='text-align:center'><% if(timeCheck) { %>
+						<td><%= rs.getString("posts.Acc_ID") %></td>
+						<td><%= rs.getFloat("Bid_Amount") %></td>
+						<td><%= rs.getFloat("Current_price") %></td>
+						<td><%= rs.getString("End_Date") %></td>
+						<td><% if(timeCheck) { %>
 							 		Ongoing. 
 							<% }
 							   else { %>
 							   		Closed.
 							<% } %>
 						</td>	
+						<td><% if(timeCheck) { 
+									if(bid_amount == curr_price) {
+										%> You are winning! <% 
+									}
+							   		else { 
+							   			%> You are losing. <% 
+							   		}
+								}else {
+									if(bid_amount == curr_price && bid_amount >= reserve) {
+										%> You've won! <% 
+									}
+							   		else if(bid_amount == curr_price){ 
+								   			%> Your winning bid did not meet the seller's reserved price. You've lost. <% 
+							   		}
+							   		else {
+							   			%> You've lost! <% 
+							   		}
+								}
+						%>	   			
+						</td>	 
 					</tr>
-					<% } while (auctionsRS.next()); %>
+					<% } while (rs.next()); %>
 				</table>
-				<%	} 
-			else {
-				%>There are no auctions in the database. <% 
-			}
+				<%	} 	
 	
 			//Close the connection. 
 			con.close();

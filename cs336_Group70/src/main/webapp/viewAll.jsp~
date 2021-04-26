@@ -15,7 +15,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<<<<<<< HEAD
+<meta charset="ISO-8859-1">
+=======
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+>>>>>>> e0c0501653968322b94b0e4c89f2bc659f6ef5a2
 <title>All Auctions</title>
 </head>
 <body>
