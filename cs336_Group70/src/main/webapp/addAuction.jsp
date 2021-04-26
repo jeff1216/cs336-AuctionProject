@@ -10,7 +10,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+		<style>
+		body {
+		margin: 0 !important;
+		}
+		</style>
 <title>Insert title here</title>
 </head>
 <body>
