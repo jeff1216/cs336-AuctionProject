@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','123admin','123-456-7890','1111-01-01','chase',1,1),('custRep1','custRep','custRepName','custRep@email.com','456custRep','098-765-4321','2222-02-02','chase',1,0);
+INSERT INTO `accounts` VALUES ('admin','admin','adminName','admin@email.com','admin','123-456-7890','1995-01-01','chase',1,1),('custrep','custrep','custrepName','custrep@email.com','custrep','098-765-4321','1995-01-01','chase',1,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `alerts` (
   `Auction_ID` varchar(45) NOT NULL,
   `Acc_ID` varchar(45) NOT NULL,
   `Message` varchar(300) NOT NULL,
-  `time` DateTime NOT NULL,
+  `time` datetime NOT NULL,
   PRIMARY KEY (`Acc_ID`,`Alert_ID`),
   CONSTRAINT `Acc_ID5` FOREIGN KEY (`Acc_ID`) REFERENCES `accounts` (`Acc_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -99,7 +99,6 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES ('2b33da17-fa02-48ab-9c8d-aa8df18df9b0',0,2,'2021-04-25 14:00:00',NULL),('2eaa6dca-5417-4d25-bacf-b463341c703c',0,1,'2021-04-25 13:00:00',NULL),('43844747-c53b-4f09-851d-443e25006220',300,40,'2021-04-25 11:11:11',NULL),('538d8d10-51f5-4834-ac56-3727c9d38bc2',0,123,'2021-04-25 11:11:11',NULL),('6c35c3d0-7625-426b-88f6-56749714827f',0,33,'3333-03-03 03:03:03',NULL),('867cdf65-ad63-4f0a-85b3-d366279cb6d8',NULL,1,'1111-11-11 11:11:11',NULL),('d8083222-a1c4-4bc3-9838-03cd35f8f169',222,222,'2222-12-22 00:00:00',NULL),('e0a29e4e-776f-43c4-bddb-1a985849dc59',0,123,'1111-11-11 11:11:11',NULL),('f231c960-5c2a-4c09-9a03-b089abd38a88',1,1,'2021-04-25 13:10:00',NULL);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +125,6 @@ CREATE TABLE `bid_on` (
 
 LOCK TABLES `bid_on` WRITE;
 /*!40000 ALTER TABLE `bid_on` DISABLE KEYS */;
-INSERT INTO `bid_on` VALUES ('43844747-c53b-4f09-851d-443e25006220','7802e00f-7d7d-4c23-b5c5-44dba6b2e593'),('43844747-c53b-4f09-851d-443e25006220','839ef072-829a-42a1-bfea-69f72e35447a'),('f231c960-5c2a-4c09-9a03-b089abd38a88','f2739ab3-b668-427c-96c0-f15474387cee');
 /*!40000 ALTER TABLE `bid_on` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +149,6 @@ CREATE TABLE `bids` (
 
 LOCK TABLES `bids` WRITE;
 /*!40000 ALTER TABLE `bids` DISABLE KEYS */;
-INSERT INTO `bids` VALUES ('7802e00f-7d7d-4c23-b5c5-44dba6b2e593','300.0','2021-04-25 00:19:09'),('839ef072-829a-42a1-bfea-69f72e35447a','200.0','2021-04-25 00:00:24'),('f2739ab3-b668-427c-96c0-f15474387cee','1.0','2021-04-25 13:06:35');
 /*!40000 ALTER TABLE `bids` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +175,6 @@ CREATE TABLE `cpu` (
 
 LOCK TABLES `cpu` WRITE;
 /*!40000 ALTER TABLE `cpu` DISABLE KEYS */;
-INSERT INTO `cpu` VALUES ('109ea3ac-7cfb-4b1e-947c-660760708820',23,23,'2300'),('b5160e7d-59ac-411b-a9c9-9fbb30d6ba61',123,123,'123'),('d59e7776-b91f-41f2-b0e8-c9407021f8c6',2,2,'2000'),('d7aa3d0f-9bb8-4dde-bdaa-65840e5c694d',456,456,'546');
 /*!40000 ALTER TABLE `cpu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +229,6 @@ CREATE TABLE `has_item` (
 
 LOCK TABLES `has_item` WRITE;
 /*!40000 ALTER TABLE `has_item` DISABLE KEYS */;
-INSERT INTO `has_item` VALUES ('2eaa6dca-5417-4d25-bacf-b463341c703c','109ea3ac-7cfb-4b1e-947c-660760708820'),('6c35c3d0-7625-426b-88f6-56749714827f','10d622d2-4b45-402d-9c5c-47b59127b129'),('f231c960-5c2a-4c09-9a03-b089abd38a88','33fb8f0e-5f84-414e-8ea1-1272fc8d39ff'),('e0a29e4e-776f-43c4-bddb-1a985849dc59','495b9edd-b869-467a-a8ec-9b91fe256078'),('2b33da17-fa02-48ab-9c8d-aa8df18df9b0','4e817e10-d004-40cd-aec2-e37e11f5a1ab'),('867cdf65-ad63-4f0a-85b3-d366279cb6d8','7755f3a4-2b35-410d-920f-920ddc26f069'),('43844747-c53b-4f09-851d-443e25006220','b5160e7d-59ac-411b-a9c9-9fbb30d6ba61'),('d8083222-a1c4-4bc3-9838-03cd35f8f169','d59e7776-b91f-41f2-b0e8-c9407021f8c6'),('538d8d10-51f5-4834-ac56-3727c9d38bc2','d7aa3d0f-9bb8-4dde-bdaa-65840e5c694d');
 /*!40000 ALTER TABLE `has_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +283,6 @@ CREATE TABLE `makes_bid` (
 
 LOCK TABLES `makes_bid` WRITE;
 /*!40000 ALTER TABLE `makes_bid` DISABLE KEYS */;
-INSERT INTO `makes_bid` VALUES ('admin','7802e00f-7d7d-4c23-b5c5-44dba6b2e593',NULL,NULL),('admin','f2739ab3-b668-427c-96c0-f15474387cee',NULL,NULL);
 /*!40000 ALTER TABLE `makes_bid` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,7 +308,6 @@ CREATE TABLE `pc_part` (
 
 LOCK TABLES `pc_part` WRITE;
 /*!40000 ALTER TABLE `pc_part` DISABLE KEYS */;
-INSERT INTO `pc_part` VALUES ('109ea3ac-7cfb-4b1e-947c-660760708820','page','used','cpu'),('10d622d2-4b45-402d-9c5c-47b59127b129','broken','used',''),('33fb8f0e-5f84-414e-8ea1-1272fc8d39ff','111','used','ram'),('495b9edd-b869-467a-a8ec-9b91fe256078','Test','used',''),('4e817e10-d004-40cd-aec2-e37e11f5a1ab','new item','new','ram'),('7755f3a4-2b35-410d-920f-920ddc26f069','test','used',''),('b5160e7d-59ac-411b-a9c9-9fbb30d6ba61','repAuc','new',''),('d59e7776-b91f-41f2-b0e8-c9407021f8c6','test2','new',''),('d7aa3d0f-9bb8-4dde-bdaa-65840e5c694d','type','used','cpu'),('item1','ram1','wow',''),('item2','ram2','wow',''),('item3','ram3','wow','');
 /*!40000 ALTER TABLE `pc_part` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +334,6 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('2b33da17-fa02-48ab-9c8d-aa8df18df9b0','admin'),('2eaa6dca-5417-4d25-bacf-b463341c703c','admin'),('538d8d10-51f5-4834-ac56-3727c9d38bc2','admin'),('6c35c3d0-7625-426b-88f6-56749714827f','admin'),('867cdf65-ad63-4f0a-85b3-d366279cb6d8','admin'),('d8083222-a1c4-4bc3-9838-03cd35f8f169','admin'),('e0a29e4e-776f-43c4-bddb-1a985849dc59','admin'),('43844747-c53b-4f09-851d-443e25006220','custRep1'),('f231c960-5c2a-4c09-9a03-b089abd38a88','custRep1');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +360,6 @@ CREATE TABLE `psu` (
 
 LOCK TABLES `psu` WRITE;
 /*!40000 ALTER TABLE `psu` DISABLE KEYS */;
-INSERT INTO `psu` VALUES ('10d622d2-4b45-402d-9c5c-47b59127b129',3,'3',3),('495b9edd-b869-467a-a8ec-9b91fe256078',1000,'123',123);
 /*!40000 ALTER TABLE `psu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +414,6 @@ CREATE TABLE `ram` (
 
 LOCK TABLES `ram` WRITE;
 /*!40000 ALTER TABLE `ram` DISABLE KEYS */;
-INSERT INTO `ram` VALUES ('33fb8f0e-5f84-414e-8ea1-1272fc8d39ff','111',11,111),('4e817e10-d004-40cd-aec2-e37e11f5a1ab','1',1,1),('7755f3a4-2b35-410d-920f-920ddc26f069','ram1',1,1),('item1','type',1,1),('item2','type',2,2),('item3','type',3,3);
 /*!40000 ALTER TABLE `ram` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,4 +430,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-25 13:10:05
+-- Dump completed on 2021-04-25 20:55:51
