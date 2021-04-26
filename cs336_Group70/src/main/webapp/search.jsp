@@ -20,7 +20,6 @@
 <%@ include file="navbar.jsp"%>
 		
 		<h3>Search by these parameters:</h3>
-		<h5> Not All values are required to be filled to search</h5>
    		<form action="searchParam.jsp" method="post">
   			<label for="current_Price">Current Price:</label>
  			<input type="text" name="current_Price"><br/>
@@ -38,12 +37,17 @@
  			<input type="text" name="HighBid"><br/>
  			<label for="Type">Type:</label>
  			<input type="text" name="Type"><br/>
- 			<label for="AuctionStatus">Auction Status:</label>
- 			<select class="form-control" name="AuctionStatus">
-                  <option selected="selected" value="Ongoing.">Ongoing</option>
-                  <option value="Closed.">Closed</option>
-    		</select>
-  			<input type="submit" value="Submit">
+ 			<input type="submit" name = "Submit"><br/>
+ 			<p></p>
+ 			<h3> Sort by Submit </h3>
+ 			<p></p>
+  			<input type="submit" name = sort value="current_Price"><br/>	
+ 			<input type="submit" name = sort value="min_Price"><br/>		
+ 			<input type="submit" name = sort value="End_date"><br/>		
+ 			<input type="submit" name = sort value="Acc_Id"><br/>		
+ 			<input type="submit" name = sort value="Name"><br/>		
+ 			<input type="submit" name = sort value="HighBid"><br/>
+ 			<input type="submit" name = sort value="Type"><br/>
 		</form>
 <%
     }
