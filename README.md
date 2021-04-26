@@ -26,3 +26,8 @@ If it is possible, please split grading as so:
 	- Section IV part: "Let people browse on the items and see the status of the current bidding"
 - Dan
 	- Section IV (Browsing and advanced search functionality) excluding "Let people browse on the items and see the status of the current bidding"
+
+If the above is not possible, then please look at checklist for splitting of work
+
+
+#Root password is left empty in cs336_Group70\src\main\java\com\cs336_Group70\pkg\ApplicationDB.java

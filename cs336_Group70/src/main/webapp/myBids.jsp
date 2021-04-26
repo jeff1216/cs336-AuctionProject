@@ -51,13 +51,13 @@
 			if(rs.next()) { %>
 				<table>
 					<tr>
-						<th>Auction</th>
-						<th>Seller</th>
-						<th>Your Bid</th>
-						<th>Current Highest Bid</th>
-						<th>End DateTime</th>
-						<th>Auction Status</th>
-						<th>Your Status</th>
+						<th>[Auction]</th>
+						<th>[Seller]</th>
+						<th>[Your Bid]</th>
+						<th>[Current Highest Bid]</th>
+						<th>[End DateTime]</th>
+						<th>[Auction Status]</th>
+						<th>[Your Status]</th>
 					</tr>
 					<% do { 
 						float bid_amount = Float.parseFloat(rs.getString("Bid_Amount"));

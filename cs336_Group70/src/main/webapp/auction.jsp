@@ -76,13 +76,13 @@
 			%>
 				<table>
 					<tr>
-						<th>Auction</th>
-						<th>Seller</th>
-						<th>Current Highest Bid</th>
-						<th>Current Highest Bidder</th>
-						<th>End Date</th>
-						<th>Status</th>
-						<th>Winner</th>
+						<th>[Auction]</th>
+						<th>[Seller]</th>
+						<th>[Current Highest Bid]</th>
+						<th>[Current Highest Bidder]</th>
+						<th>[End Date]</th>
+						<th>[Status]</th>
+						<th>[Winner]</th>
 					</tr>
 					<% do { %>
 					<tr>
@@ -137,7 +137,7 @@
 				ResultSet ramRS = ps.executeQuery();
 				ramRS.next();
 			%> 
-				Ram Type: <%= ramRS.getString("Type") %>
+				Ram Type: <%= ramRS.getString("Ram_type") %>
 				<br>
 				Ram Size: <%= ramRS.getString("Size") %>
 				<br>
@@ -199,20 +199,20 @@
 					<tr>
 						<td>Increment Amount</td>
 						<td>
-							<input type= "number" name= "increment" placeholder= "0.00" required>
+							<input type="number" name= "increment" placeholder= "0.00" required = "required">
 						</td>
 					</tr>
 					<tr>
 						<td>Upper Limit Amount</td>
 						<td>
-							<input type= "number" name= "upperLimit" placeholder= "0.00" required>	
+							<input type="number" name= "upperLimit" placeholder= "0.00" required>	
 						</td>
 					</tr>	
 					<tr>
 					<tr>
 						<td>Initial Bid Amount</td>
 						<td>
-							<input type= "number" name= "initialBid" placeholder= "0.00" required>	
+							<input type="number" name= "initialBid" placeholder= "0.00" required>	
 						</td>
 					</tr>	
 					<tr>

@@ -53,12 +53,12 @@
 			if(myAuctionRS.next()) { %>
 				<table>
 					<tr>
-						<th>Auction</th>
-						<th>Minimum Reserve Price</th>
-						<th>Current Highest Bid</th>
-						<th>Current Highest Bidder</th>
-						<th>End DateTime</th>
-						<th>Auction Status</th>
+						<th>[Auction]</th>
+						<th>[Minimum Reserve Price]</th>
+						<th>[Current Highest Bid]</th>
+						<th>[Current Highest Bidder]</th>
+						<th>[End DateTime]</th>
+						<th>[Auction Status]</th>
 					</tr>
 					<% do { 
 						java.util.Date date = new Date();

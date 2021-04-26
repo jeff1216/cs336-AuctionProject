@@ -400,7 +400,7 @@ DROP TABLE IF EXISTS `ram`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ram` (
   `Item_ID` varchar(45) NOT NULL,
-  `Type` varchar(45) NOT NULL,
+  `Ram_type` varchar(45) NOT NULL,
   `Size` int NOT NULL,
   `Speed` int NOT NULL,
   PRIMARY KEY (`Item_ID`),
@@ -430,4 +430,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-25 20:55:51
+-- Dump completed on 2021-04-25 21:12:05
