@@ -155,11 +155,13 @@
 				oldBid = oldBidRS.getString("Bid_ID");
 			}
 			if(exists) {
-				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ? and Bid_ID = ?";
+				String updateQuery = "UPDATE makes_bid SET Bid_ID = ?, Increment = ?, Upper_limit = ? WHERE Acc_ID = ? and Bid_ID = ?";
 				PreparedStatement ps5 = con.prepareStatement(updateQuery);
 				ps5.setString(1, bid_ID);
-				ps5.setString(2, user);
-				ps5.setString(3, oldBid);
+				ps5.setNull(2, java.sql.Types.NULL);
+				ps5.setNull(3, java.sql.Types.NULL);
+				ps5.setString(4, user);
+				ps5.setString(5, oldBid);
 				ps5.executeUpdate();
 				%> You've updated your bid!<%
 			} else {
@@ -274,11 +276,18 @@
 			String otherBidderQuery = "Select DISTINCT * From makes_bid inner join bid_on ON makes_bid.bid_id = bid_on.bid_id  Where auction_id = ? and NOT acc_id=?";
 			PreparedStatement ps12 = con.prepareStatement(otherBidderQuery);
 			ps12.setString(1, auctionID);
-			ps12.setString(2, user);
+			ps12.setString(2, prevBidder);
 			ResultSet otherBidderRS = ps12.executeQuery();
 			while(otherBidderRS.next()) {
 				String alertID = String.valueOf( (long) (Math.random() * 100000l));
-				String msg = "You have been outbidded.";
+				String msg;
+				String upperlimit = otherBidderRS.getString("Upper_limit");
+				Float upper = Float.parseFloat(upperlimit);
+				if(upperlimit != null && upper < bidAmount){
+					msg = "Your upper limit has been outbidded.";
+				}else{
+					msg = "You have been outbidded.";
+				}
 				String msgQuery = "INSERT INTO alerts VALUES(?, ?, ?, ?, ?);";
 				PreparedStatement ps13 = con.prepareStatement(msgQuery);
 				ps13.setString(1, alertID);

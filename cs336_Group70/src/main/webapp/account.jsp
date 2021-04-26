@@ -8,7 +8,18 @@
 </head>
 <body>
 
-Not yet implemented.
+<%
+if ((session.getAttribute("user") == null)) {
+	response.sendRedirect("login.jsp");
+
+} else {
+%>
+<%@ include file="navbar.jsp"%>
+<p>Not yet implemented</p>
+
+<%
+    }
+%>.
 
 </body>
 </html>
