@@ -62,9 +62,9 @@ if ((session.getAttribute("user") == null)) {
 			</td>
 		</tr>
 		<tr><td>Note: For entries regarding other types, please fill in with "0".</td> </tr>
-		
-		<tr>		
-		<td>RAM Type (RAM)</td>
+		<tr><td><h2>RAM Details</h2></td></tr>
+		<tr>
+		<td>RAM Type</td>
 		</tr>
 		<tr>
 			<td>
@@ -72,7 +72,7 @@ if ((session.getAttribute("user") == null)) {
 			</td>
 		</tr>
 		<tr>
-		<td>Size in GB (RAM)</td>
+		<td>Size in GB</td>
 		</tr>
 		<tr>
 			<td>
@@ -81,15 +81,16 @@ if ((session.getAttribute("user") == null)) {
 		</tr>
 		<tr>
 		
-		<td>Speed in MHz (RAM)</td>
+		<td>Speed in MHz</td>
 		</tr>
 		<tr>
 			<td>
 				<input type="number" name="ramSpeed" title="NA if not RAM" required="required">
 			</td>
 		</tr>
+		<tr><td><h2>CPU Details</h2></td></tr>
 		<tr>
-		<td>Core Count (CPU)</td>
+		<td>Core Count</td>
 		</tr>
 		<tr>
 			<td>
@@ -98,7 +99,7 @@ if ((session.getAttribute("user") == null)) {
 		</tr>
 		<tr>
 		
-		<td>Core Clock Speed in GHz (CPU)</td>
+		<td>Core Clock Speed in GHz</td>
 		</tr>
 		<tr>
 			<td>
@@ -106,15 +107,16 @@ if ((session.getAttribute("user") == null)) {
 			</td>
 		</tr>
 		<tr>
-		<td>Series (CPU)</td>
+		<td>Series</td>
 		</tr>
 		<tr>
 			<td>
 				<input type="text" name="cpuSeries" title="NA if not CPU" required="required">
 			</td>
 		</tr>
+		<tr><td><h2>Power Supply Details</h2></td></tr>
 		<tr>
-		<td>Wattage in Watts (Power Supply)</td>
+		<td>Wattage in Watts</td>
 		</tr>
 		<tr>
 			<td>
@@ -122,7 +124,7 @@ if ((session.getAttribute("user") == null)) {
 			</td>
 		</tr>
 		<tr>
-		<td>Modularity (Power Supply)</td>
+		<td>Modularity</td>
 		</tr>
 		<tr>
 			<td>
@@ -130,16 +132,15 @@ if ((session.getAttribute("user") == null)) {
 			</td>
 		</tr>
 		<tr>
-		<td>Efficiency Rating in % (Power Supply)</td>
+		<td>Efficiency Rating in %</td>
 		</tr>
 		<tr>
 			<td>
 				<input type="number" name="psuEfficiency" title="NA if not Power Supply" required="required">
 			</td>
 		</tr>
+		<tr><td><h2>Auction Details</h2></td></tr>
 		<tr>
-		
-		
 		<td>Closing Date: Format is YYYY-MM-DD hh:mm:ss</td>
 		</tr>
 		<tr>

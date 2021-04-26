@@ -155,11 +155,13 @@
 				oldBid = oldBidRS.getString("Bid_ID");
 			}
 			if(exists) {
-				String updateQuery = "UPDATE makes_bid SET Bid_ID = ? WHERE Acc_ID = ? and Bid_ID = ?";
+				String updateQuery = "UPDATE makes_bid SET Bid_ID = ?, Increment = ?, Upper_limit = ? WHERE Acc_ID = ? and Bid_ID = ?";
 				PreparedStatement ps5 = con.prepareStatement(updateQuery);
 				ps5.setString(1, bid_ID);
-				ps5.setString(2, user);
-				ps5.setString(3, oldBid);
+				ps5.setNull(2, java.sql.Types.NULL);
+				ps5.setNull(3, java.sql.Types.NULL);
+				ps5.setString(4, user);
+				ps5.setString(5, oldBid);
 				ps5.executeUpdate();
 				%> You've updated your bid!<%
 			} else {

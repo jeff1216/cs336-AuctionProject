@@ -7,8 +7,18 @@
 <title>Search Auctions</title>
 </head>
 <body>
+<%
+if ((session.getAttribute("user") == null)) {
+	response.sendRedirect("login.jsp");
 
-Not yet implemented.
+} else {
+%>
+<%@ include file="navbar.jsp"%>
+<p>Not yet implemented</p>
+
+<%
+    }
+%>
 
 </body>
 </html>

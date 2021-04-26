@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>addAuction</title>
 </head>
 <body>
 <%   if ((session.getAttribute("user") == null)) {
