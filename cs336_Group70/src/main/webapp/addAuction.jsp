@@ -6,17 +6,11 @@
 <%@ page import="java.time.temporal.TemporalAdjusters.*"%>  
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.UUID" %>
-i
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
-		<style>
-		body {
-		margin: 0 !important;
-		}
-		</style>
+<meta charset="ISO-8859-1">
 <title>addAuction</title>
 </head>
 <body>
@@ -41,15 +35,32 @@ i
 		String cond = request.getParameter("condition");
 		String itemType = request.getParameter("itemtype");
 		
-		String ramType = request.getParameter("ramType");
-		int ramSize = Integer.parseInt(request.getParameter("ramSize"));
-		int ramSpeed = Integer.parseInt(request.getParameter("ramSpeed"));
-		int cpuCore = Integer.parseInt(request.getParameter("cpuCore"));
-		int cpuClock = Integer.parseInt(request.getParameter("cpuClock"));
-		String cpuSeries = request.getParameter("cpuSeries");
-		int psuWattage = Integer.parseInt(request.getParameter("psuWattage"));
-		String psuModularity = request.getParameter("psuModularity");
-		int psuEfficiency = Integer.parseInt(request.getParameter("psuEfficiency"));
+		String ramType = "";
+		int ramSize = 0;
+		int ramSpeed = 0;
+		int cpuCore = 0;
+		int cpuClock = 0;
+		String cpuSeries = "";
+		int psuWattage = 0;
+		String psuModularity = "";
+		int psuEfficiency = 0;
+		
+		//insert into ram/cpu/psu table
+		if (itemType.equals("ram")){
+			 ramType = request.getParameter("ramType");
+			 ramSize = Integer.parseInt(request.getParameter("ramSize"));
+			 ramSpeed = Integer.parseInt(request.getParameter("ramSpeed"));
+		} else if (itemType.equals("cpu")){
+			 cpuCore = Integer.parseInt(request.getParameter("cpuCore"));
+			 cpuClock = Integer.parseInt(request.getParameter("cpuClock"));
+			 cpuSeries = request.getParameter("cpuSeries");
+		} else {
+			 psuWattage = Integer.parseInt(request.getParameter("psuWattage"));
+			 psuModularity = request.getParameter("psuModularity");
+			 psuEfficiency = Integer.parseInt(request.getParameter("psuEfficiency"));
+		}
+		
+		
 		
 		String closeDate = request.getParameter("closeDate");
 		int minBid = Integer.parseInt(request.getParameter("minBid"));
