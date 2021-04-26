@@ -15,14 +15,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; i
+<meta charset="ISO-8859-1">
+<title>Search Results</title>
+</head>
+<body>
+
+
 <%   if ((session.getAttribute("user") == null)) {
 
 		response.sendRedirect("login.jsp");
 
 	} else {
+%>
 
-%><%@ include file="navbar.jsp"%>
+<%@ include file="navbar.jsp"%>
 		
 		<h3>Search by these parameters:</h3>
 		<h5> Not All values are required to be filled to search</h5>
@@ -33,9 +39,9 @@
  			<input type="text" name="min_Price"><br/>
  			<label for="End_date">End Date:</label>
  			<input type="text" name="End_date"><br/>
- 			<label for="Acc_ID">Account ID:</label>
+ 			<label for="Acc_ID">Seller:</label>
  			<input type="text" name="Acc_Id"><br/>
- 			<label for="Name">Name:</label>
+ 			<label for="Name">Name of Auction:</label>
  			<input type="text" name="Name"><br/>
  			<label for="Condition">Condition:</label>
  			<input type="text" name="Condition"><br/>

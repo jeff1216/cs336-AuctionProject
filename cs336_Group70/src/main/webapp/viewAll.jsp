@@ -15,13 +15,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
-		<style>
-		body {
-		margin: 0 !important;
-		}
-		</style>
+<meta charset="ISO-8859-1">
 <title>All Auctions</title>
 </head>
 <body>

@@ -10,13 +10,7 @@ i
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
-		<style>
-		body {
-		margin: 0 !important;
-		}
-		</style>
+<meta charset="ISO-8859-1">
 <title>addAuction</title>
 </head>
 <body>
